@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colba</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --blue: #1e90ff; }
+    html, body { height: 100%; font-family: 'Inter', sans-serif; }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: relative; z-index: 10;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 40px 40px;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      width: 176px;
+      display: flex; align-items: center; gap: 13px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .logo-img { width: 100%; }
+
+    .nav-lang {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 30px; padding: 9px 16px;
+      cursor: pointer; font-size: 13px; font-weight: 600;
+      transition: background .2s;
+      position: relative;
+      user-select: none;
+      z-index: 200;
+    }
+    .nav-lang:hover { background: rgba(255,255,255,0.12); }
+    .nav-lang .flag { font-size: 18px; }
+    .nav-lang .chevron { font-size: 10px; color: rgba(255,255,255,0.55); margin-left: 2px; }
+
+    .lang-dd {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: #131f3a;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+      z-index: 300; min-width: 145px;
+      display: none;
+    }
+    .lang-dd.open { display: block; }
+    .dd-item {
+      padding: 11px 18px;
+      font-size: 13px; font-weight: 500;
+      transition: background .15s; white-space: nowrap;
+      cursor: pointer; color: #fff;
+    }
+    .dd-item:hover { background: rgba(255,255,255,0.08); }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      position: relative; z-index: 10;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 0px 40px 40px;
+      max-width: 1280px;
+      width: 100%;
+      margin: 40px auto;
+    }
+
+    /* LEFT */
+    .left { flex: 1; display: flex; flex-direction: column; gap: 32px; }
+
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: clamp(34px, 4.2vw, 60px);
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    /* ── NEW SLIDER ── */
+    .slider-outer { display: flex; flex-direction: column; gap: 14px; }
+
+    .slide-card {
+      width: 540px;
+      min-height: 300px;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .slide-card.slide-enter     { animation: sEnter .38s cubic-bezier(.22,1,.36,1) both; }
+    .slide-card.slide-exit-next { animation: sExitL .38s cubic-bezier(.22,1,.36,1) both; }
+    .slide-card.slide-exit-prev { animation: sExitR .38s cubic-bezier(.22,1,.36,1) both; }
+
+    @keyframes sEnter { from{opacity:0;transform:scale(.95) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
+    @keyframes sExitL { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-20px) scale(.96)} }
+    @keyframes sExitR { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(20px) scale(.96)} }
+
+    /* Left photo area */
+    .sc-photo {
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+    }
+    .sc-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    /* Placeholder when no real image */
+    .sc-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 0;
+      font-size: 80px;
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* Right text area */
+    .sc-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px 24px 36px 20px;
+      gap: 14px;
+      position: relative;
+    }
+
+    /* Diagonal accent lines (like in the screenshots) */
+    .sc-body::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border: 3px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .sc-body::after {
+      content: '';
+      position: absolute;
+      bottom: 10px; right: 10px;
+      width: 60px; height: 60px;
+      border: 2px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .sc-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border-radius: 30px;
+      padding: 4px 14px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #fff;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .sc-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: clamp(18px, 2.2vw, 26px);
+      line-height: 1.15;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .sc-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.65;
+    }
+
+    /* Decorative diagonal lines like in screenshots */
+    .sc-deco {
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: 22px;
+    }
+    .sc-deco span {
+      position: absolute;
+      display: block;
+      background: rgba(255,255,255,0.06);
+      transform-origin: center;
+    }
+    .sc-deco span:nth-child(1) {
+      width: 3px; height: 200%;
+      top: -50%; right: 42%;
+      transform: rotate(20deg);
+    }
+    .sc-deco span:nth-child(2) {
+      width: 2px; height: 200%;
+      top: -50%; right: 38%;
+      transform: rotate(20deg);
+    }
+
+    /* DOTS */
+    .sdots { display: flex; gap: 7px; }
+    .sdot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.28); cursor: pointer;
+      transition: width .3s cubic-bezier(.34,1.56,.64,1), background .3s, border-radius .3s;
+    }
+    .sdot.active { width: 26px; border-radius: 4px; background: var(--c, #fff); }
+
+    /* ARROW */
+    .arrow-wrap { flex-shrink: 0; opacity: 0.85; }
+
+    /* FORM */
+    .right { flex-shrink: 0; width: 476px; }
+    .form-card {
+      width: 476px; height: 637px;
+      background: #fff; border-radius: 24px;
+      border: 2px solid #5aabff;
+      box-shadow: 0 0 0 1px rgba(30,144,255,0.07), 0 24px 60px rgba(0,0,0,0.45);
+      padding: 44px 36px 36px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .fc-header { text-align: center; }
+    .fc-title {
+      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 45px;
+      background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1.28; margin-bottom: 12px;
+    }
+    .fc-sub { font-size: 13px; color: #94a3b8; font-style: italic; }
+    .fc-fields { display: flex; flex-direction: column; gap: 0; flex: 1; justify-content: center; margin: 125px 10px; }
+    .fi { border-bottom: 1.5px solid #e2e8f0; padding: 18px 4px; position: relative; transition: border-color .2s; }
+    .fi:focus-within { border-color: var(--blue); }
+    .fi.fi-err { border-color: #f87171 !important; }
+    .fi input {
+      width: 100%; border: none; outline: none;
+      font-family: 'Inter', sans-serif; font-size: 16px; color: #1a1a2e; background: transparent;
+    }
+    .fi input::placeholder { color: #94a3b8; }
+    .fc-btn {
+      width: 100%; height: 60px;
+      background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
+      color: #fff; border: none; cursor: pointer; border-radius: 16px;
+      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px;
+      transition: filter .15s, transform .15s, box-shadow .15s; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .fc-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(30,144,255,0.45); }
+    .fc-btn:active { transform: translateY(0); }
+    .fc-btn:disabled { opacity: 0.75; cursor: not-allowed; transform: none; box-shadow: none; filter: none; }
+
+    .fc-error { font-size: 13px; color: #ef4444; text-align: center; padding: 0 4px; line-height: 1.5; }
+
+    .fc-spinner {
+      display: inline-block; width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.35); border-top-color: #fff;
+      border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fi input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* SUCCESS */
+    .fc-success {
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      text-align: center; animation: popIn .35s cubic-bezier(.34,1.56,.64,1);
+      height: 100%; justify-content: center;
+    }
+    @keyframes popIn { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
+    .fc-check {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: #22c55e; display: flex; align-items: center; justify-content: center;
+      font-size: 30px; color: #fff;
+    }
+    .fc-success h3 { font-family:'Montserrat',sans-serif; font-weight:800; font-size:22px; color:#0b1a3e; }
+    .fc-success p  { font-size:14px; color:#64748b; }
+    .fc-reset {
+      background: transparent; border: 1.5px solid #e2e8f0; border-radius: 10px;
+      padding: 9px 24px; font-size: 13px; cursor: pointer; color: #64748b;
+      transition: border-color .2s;
+    }
+    .fc-reset:hover { border-color: #0b1a3e; color: #0b1a3e; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) { .arrow-wrap { display: none; } .main { gap: 28px; } }
+    @media (max-width: 1024px) {
+      .navbar { padding: 20px 24px; }
+      .main { padding: 0 24px 32px; gap: 24px; }
+      .right { width: 400px; }
+      .form-card { width: 100%; height: auto; min-height: 580px; }
+      .fc-title { font-size: 20px; }
+    }
+    @media (max-width: 860px) {
+      html, body { height: auto; }
+      .page { min-height: 100svh; overflow: auto; }
+      .navbar { padding: 16px 20px; }
+      .nav-logo { width: 140px; }
+      .main { flex-direction: column; align-items: stretch; padding: 0 20px 40px; margin-top: 12px; gap: 28px; }
+      .left { gap: 22px; }
+      .hero-title { font-size: clamp(26px, 7vw, 40px); }
+      .slide-card { width: 100%; }
+      .sc-title { font-size: 16px; }
+      .sc-desc { font-size: 11px; }
+      .right { width: 100%; }
+      .form-card { width: 100%; height: auto; min-height: unset; padding: 32px 24px 28px; }
+      .fc-title { font-size: 20px; }
+      .fc-btn { height: 54px; font-size: 15px; }
+    }
+    @media (max-width: 480px) {
+      .navbar { padding: 14px 16px; }
+      .nav-logo { width: 120px; }
+      .main { padding: 0 16px 0px; gap: 22px; z-index: 9; margin: 60px auto; }
+      .hero-title { font-size: clamp(22px, 8vw, 34px); }
+      .sc-title { font-size: 14px; }
+      .sc-desc { font-size: 10px; line-height: 1.5; }
+      .sc-body { padding: 18px 14px 30px 14px; gap: 8px; }
+      .form-card { padding: 28px 20px 24px; border-radius: 20px; }
+      .fc-fields {margin: 30px 10px; }
+      .fc-title { font-size: 18px; }
+      .fi input { font-size: 15px; }
+      .fc-btn { height: 52px; font-size: 14px; border-radius: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page" id="page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="nav-logo" href="#">
+      <img src="logoOq.png" alt="Colba logo" class="logo-img" />
+    </a>
+    <div class="nav-lang" id="langBtn">
+      <span class="flag" id="flagIcon">🇺🇿</span>
+      <span id="langLabel">Uzb</span>
+      <span class="chevron">▾</span>
+      <div class="lang-dd" id="langDd">
+        <div class="dd-item" data-lang="uz">🇺🇿 O'zbekcha</div>
+        <div class="dd-item" data-lang="ru">🇷🇺 Русский</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- LEFT -->
+    <div class="left">
+      <h1 class="hero-title" id="heroTitle"></h1>
+
+      <!-- SLIDER -->
+      <div class="slider-outer">
+        <div class="slide-card slide-enter" id="slideCard">
+          <!-- Decorative diagonal lines -->
+          <div class="sc-deco">
+            <span></span>
+            <span></span>
+          </div>
+          <!-- Left: photo -->
+          <div class="sc-photo" id="scPhoto">
+            <div class="sc-photo-placeholder" id="scPlaceholder"></div>
+          </div>
+          <!-- Right: text -->
+          <div class="sc-body" id="scBody">
+            <span class="sc-tag" id="scTag"></span>
+            <h3 class="sc-title" id="scTitle"></h3>
+            <p class="sc-desc" id="scDesc"></p>
+          </div>
+        </div>
+        <div class="sdots" id="sdots"></div>
+      </div>
+    </div>
+
+    <!-- ARROW -->
+    <div class="arrow-wrap">
+      <svg width="64" height="46" viewBox="0 0 64 46" fill="none">
+        <path d="M56.7209 5.40605C56.7827 6.1656 56.8446 6.92516 56.8181 7.73139C46.786 -0.779873 32.4866 -2.1719 20.5207 4.71075C7.45239 12.2886 -1.51059 29.3561 1.33808 44.602C1.44667 45.45 3.01641 45.6399 3.17303 44.6519C5.46419 31.2196 8.34762 18.2669 20.7353 10.2562C30.4343 4.00433 44.6933 3.60689 53.239 11.6579C51.5341 11.4262 49.7876 11.3296 48.0827 11.0979C43.7789 10.6537 43.5716 17.3272 47.7403 17.7295L60.4283 19.0668C62.0865 19.2101 64.0629 17.6008 63.9341 15.858C63.7233 12.4609 63.6009 9.01718 63.3901 5.62009C63.3826 1.32344 56.5315 0.979048 56.7209 5.40605Z" fill="white"/>
+      </svg>
+    </div>
+
+    <!-- RIGHT — FORM -->
+    <div class="right">
+      <div class="form-card" id="formCard">
+        <div id="formView">
+          <div class="fc-header">
+            <h2 class="fc-title" id="fcTitle"></h2>
+            <p class="fc-sub" id="fcSub"></p>
+          </div>
+          <div class="fc-fields">
+            <div class="fi" id="fiName">
+              <input type="text" id="nameInput" />
+            </div>
+            <div class="fi" id="fiPhone">
+              <input type="tel" id="phoneInput" />
+            </div>
+          </div>
+          <p class="fc-error" id="netError" style="display:none"></p>
+          <button class="fc-btn" id="submitBtn"></button>
+        </div>
+        <div class="fc-success" id="successView" style="display:none">
+          <div class="fc-check">✓</div>
+          <h3 id="successTitle"></h3>
+          <p id="successMsg"></p>
+          <button class="fc-reset" id="resetBtn"></button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const BITRIX_WEBHOOK = 'https://YOUR_DOMAIN.bitrix24.ru/rest/1/YOUR_TOKEN'
+  const LEAD_SOURCE    = 'WEB'
+
+  async function sendToBitrix({ name, phone, lang }) {
+    const url  = `${BITRIX_WEBHOOK}/crm.lead.add.json`
+    const body = new FormData()
+    body.append('fields[TITLE]',               `Colba — ${name}`)
+    body.append('fields[NAME]',                name)
+    body.append('fields[PHONE][0][VALUE]',     phone)
+    body.append('fields[PHONE][0][VALUE_TYPE]','WORK')
+    body.append('fields[SOURCE_ID]',           LEAD_SOURCE)
+    body.append('fields[COMMENTS]',            `Til: ${lang === 'uz' ? "O'zbek" : 'Rus'} | Sayt: Colba lid forma`)
+    body.append('fields[STATUS_ID]',           'NEW')
+    const res = await fetch(url, { method: 'POST', body })
+    if (!res.ok) throw new Error(`Bitrix error: ${res.status}`)
+    return res.json()
+  }
+
+  const TRANSLATIONS = {
+    uz: {
+      heroTitle: ['KIMYO va BIOLOGIYAni', "o'rganishni", 'xohlaysizmi?'],
+      formTitle: '3 kunlik sinov darsiga yoziling!',
+      formSub: '*Faqat Toshkent shahrida yashovchilar uchun!',
+      namePlaceholder: 'Ismingiz',
+      phonePlaceholder: 'Telefon raqamingiz',
+      btnText: "Men bilan bog'laning!",
+      btnSending: 'Yuborilmoqda...',
+      successTitle: 'Rahmat',
+      successMsg: "Tez orada siz bilan bog'lanamiz.",
+      backBtn: 'Qaytish',
+      langLabel: 'Uzb',
+      errNetwork: "Xatolik yuz berdi. Iltimos qayta urinib ko'ring.",
+    },
+    ru: {
+      heroTitle: ['Хотите', 'выучить', 'ХИМИЯ и БИОЛОГИЯ?'],
+      formTitle: 'Запишитесь на 3-дневный пробный урок!',
+      formSub: '*Только для жителей города Ташкент!',
+      namePlaceholder: 'Ваше имя',
+      phonePlaceholder: 'Ваш номер телефона',
+      btnText: 'Свяжитесь со мной!',
+      btnSending: 'Отправка...',
+      successTitle: 'Спасибо',
+      successMsg: 'Мы свяжемся с вами в ближайшее время.',
+      backBtn: 'Назад',
+      langLabel: 'Rus',
+      errNetwork: 'Произошла ошибка. Пожалуйста, попробуйте снова.',
+    }
+  }
+
+  /* 
+    SLIDES — imagePath ga o'z rasmlaringizni qo'ying.
+    Masalan: imagePath: 'images/ustozlar.png'
+    Agar rasm yo'q bo'lsa, emoji ko'rsatiladi.
+  */
+  const SLIDES = {
+    uz: [
+      {
+        id:1, tag:"O'QITUVCHILAR", color:'#22c55e',
+        bg:'linear-gradient(135deg,#065f46 0%,#10b981 100%)',
+        imagePath: '',      /* <-- rasm yo'li: 'images/ustoz.jpg' */
+        emoji: '👩‍🏫',
+        title: "O'QITUVCHILARNING\nTAJRIBASI",
+        desc:"Har bir o'qituvchi maxsus o'rgatish kurslarini tamomlagan bo'lib, ularning IELTS natijalari 9.0 gacha. Bunday ustozlarni hech nimaga alishmaymiz."
+      },
+      {
+        id:2, tag:'NATIJA', color:'#3b82f6',
+        bg:'linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%)',
+        imagePath: '',
+        emoji: '🏆',
+        title:"100%\nNATIJA TIZIMI",
+        desc:"Dasturimizni to'liq yakunlagan o'quvchilar tibbiyot oliygohlariga muddatidan oldin kirish natijasiga erishmoqda."
+      },
+      {
+        id:3, tag:'YORDAM', color:'#f97316',
+        bg:'linear-gradient(135deg,#7c2d12 0%,#f97316 100%)',
+        imagePath: '',
+        emoji: '🤝',
+        title:"BEPUL\nYORDAMCHI\nO'QITUVCHI",
+        desc:"Mavzuni yaxshi o'zlashtirolmagan bo'lsangiz, yordamchi o'qituvchilar har doim yoningizda va istagan mavzuyingizni qayta tushuntirib berishadi."
+      },
+      {
+        id:4, tag:'INTENSIV', color:'#ef4444',
+        bg:'linear-gradient(135deg,#7f1d1d 0%,#ef4444 100%)',
+        imagePath: '',
+        emoji: '📅',
+        title:"HAR KUNLIK\nINTENSIV DARSLAR",
+        desc:"Haftasiga 5 kun, 4-5 soatlik intensiv mashg'ulotlar orqali maksimal natijaga chiqamiz."
+      },
+      {
+        id:5, tag:'NAZORAT', color:'#f59e0b',
+        bg:'linear-gradient(135deg,#78350f 0%,#f59e0b 100%)',
+        imagePath: '',
+        emoji: '📝',
+        title:"HAR KUNLIK\nTEST TIZIMI",
+        desc:"Har kuni test orqali bilim nazorati qilinadi va real imtihon darajasiga olib chiqiladi."
+      },
+      {
+        id:6, tag:'BONUS', color:'#06b6d4',
+        bg:'linear-gradient(135deg,#164e63 0%,#06b6d4 100%)',
+        imagePath: '',
+        emoji: '🎁',
+        title:"BEPUL\nMAJBURIY FANLAR",
+        desc:"Ona tili, tarix va matematika fanlari mutlaqo bepul o'qitiladi."
+      },
+    ],
+    ru: [
+      {
+        id:1, tag:'ПРЕПОДАВАТЕЛИ', color:'#22c55e',
+        bg:'linear-gradient(135deg,#065f46 0%,#10b981 100%)',
+        imagePath: '', emoji: '👩‍🏫',
+        title:"ОПЫТ\nПРЕПОДАВАТЕЛЕЙ",
+        desc:"Каждый преподаватель прошёл специальные курсы, их результаты IELTS — до 9.0. Таких наставников мы ни на что не меняем."
+      },
+      {
+        id:2, tag:'РЕЗУЛЬТАТ', color:'#3b82f6',
+        bg:'linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%)',
+        imagePath: '', emoji: '🏆',
+        title:"СИСТЕМА\n100% РЕЗУЛЬТАТА",
+        desc:"Студенты, завершившие программу, поступают в медицинские вузы раньше срока."
+      },
+      {
+        id:3, tag:'ПОДДЕРЖКА', color:'#f97316',
+        bg:'linear-gradient(135deg,#7c2d12 0%,#f97316 100%)',
+        imagePath: '', emoji: '🤝',
+        title:"БЕСПЛАТНЫЙ\nНАСТАВНИК",
+        desc:"Если вы не усваиваете материал, помощники-преподаватели всегда рядом и готовы объяснить любую тему заново."
+      },
+      {
+        id:4, tag:'ИНТЕНСИВ', color:'#ef4444',
+        bg:'linear-gradient(135deg,#7f1d1d 0%,#ef4444 100%)',
+        imagePath: '', emoji: '📅',
+        title:"ЕЖЕДНЕВНЫЕ\nИНТЕНСИВ ЗАНЯТИЯ",
+        desc:"5 дней в неделю по 4–5 часов интенсивной подготовки для максимального результата."
+      },
+      {
+        id:5, tag:'КОНТРОЛЬ', color:'#f59e0b',
+        bg:'linear-gradient(135deg,#78350f 0%,#f59e0b 100%)',
+        imagePath: '', emoji: '📝',
+        title:"ЕЖЕДНЕВНЫЕ\nТЕСТЫ",
+        desc:"Постоянный контроль знаний через ежедневные тесты, приближенные к реальным экзаменам."
+      },
+      {
+        id:6, tag:'БОНУС', color:'#06b6d4',
+        bg:'linear-gradient(135deg,#164e63 0%,#06b6d4 100%)',
+        imagePath: '', emoji: '🎁',
+        title:"БЕСПЛАТНЫЕ\nПРЕДМЕТЫ",
+        desc:"Родной язык, история и математика — полностью бесплатно."
+      },
+    ]
+  }
+
+  const FLAGS = { uz:'🇺🇿', ru:'🇷🇺' }
+
+  let lang      = 'uz'
+  let current   = 0
+  let animating = false
+  let timerRef  = null
+  let sending   = false
+
+  const heroTitle   = document.getElementById('heroTitle')
+  const slideCard   = document.getElementById('slideCard')
+  const scPhoto     = document.getElementById('scPhoto')
+  const scPlaceholder = document.getElementById('scPlaceholder')
+  const scTag       = document.getElementById('scTag')
+  const scTitle     = document.getElementById('scTitle')
+  const scDesc      = document.getElementById('scDesc')
+  const sdots       = document.getElementById('sdots')
+  const fcTitle     = document.getElementById('fcTitle')
+  const fcSub       = document.getElementById('fcSub')
+  const nameInput   = document.getElementById('nameInput')
+  const phoneInput  = document.getElementById('phoneInput')
+  const fiName      = document.getElementById('fiName')
+  const fiPhone     = document.getElementById('fiPhone')
+  const submitBtn   = document.getElementById('submitBtn')
+  const netError    = document.getElementById('netError')
+  const formView    = document.getElementById('formView')
+  const successView = document.getElementById('successView')
+  const successTitle= document.getElementById('successTitle')
+  const successMsg  = document.getElementById('successMsg')
+  const resetBtn    = document.getElementById('resetBtn')
+  const langBtn     = document.getElementById('langBtn')
+  const langDd      = document.getElementById('langDd')
+  const flagIcon    = document.getElementById('flagIcon')
+  const langLabel   = document.getElementById('langLabel')
+
+  function renderAll() {
+    const t      = TRANSLATIONS[lang]
+    const slides = SLIDES[lang]
+    const slide  = slides[current]
+
+    // Hero
+    heroTitle.innerHTML = t.heroTitle.map(l => `<span>${l}<br/></span>`).join('')
+
+    // Slide background
+    slideCard.style.background = slide.bg
+
+    // Photo or emoji placeholder
+    scPhoto.innerHTML = ''
+    if (slide.imagePath) {
+      const img = document.createElement('img')
+      img.src = slide.imagePath
+      img.alt = slide.title
+      scPhoto.appendChild(img)
+    } else {
+      const ph = document.createElement('div')
+      ph.className = 'sc-photo-placeholder'
+      ph.style.fontSize = '90px'
+      ph.style.alignItems = 'flex-end'
+      ph.style.paddingBottom = '0'
+      // gradient overlay on placeholder
+      ph.style.background = 'rgba(0,0,0,0.1)'
+      ph.textContent = slide.emoji
+      scPhoto.appendChild(ph)
+    }
+
+    // Tag
+    scTag.textContent = slide.tag
+
+    // Title — handle newlines
+    scTitle.innerHTML = slide.title.replace(/\n/g, '<br/>')
+
+    // Desc
+    scDesc.textContent = slide.desc
+
+    // Dots
+    sdots.innerHTML = ''
+    slides.forEach((s, i) => {
+      const dot = document.createElement('span')
+      dot.className = 'sdot' + (i === current ? ' active' : '')
+      dot.style.setProperty('--c', s.color)
+      dot.addEventListener('click', e => {
+        e.stopPropagation()
+        goTo(i, i > current ? 'next' : 'prev')
+        resetTimer()
+      })
+      sdots.appendChild(dot)
+    })
+
+    // Form
+    fcTitle.textContent        = t.formTitle
+    fcSub.textContent          = t.formSub
+    nameInput.placeholder      = t.namePlaceholder
+    phoneInput.placeholder     = t.phonePlaceholder
+    submitBtn.textContent      = t.btnText
+    flagIcon.textContent       = FLAGS[lang]
+    langLabel.textContent      = t.langLabel
+    resetBtn.textContent       = t.backBtn
+  }
+
+  function goTo(idx, dir) {
+    if (animating) return
+    animating = true
+    slideCard.className = 'slide-card ' + (dir === 'next' ? 'slide-exit-next' : 'slide-exit-prev')
+    setTimeout(() => {
+      current = idx
+      renderAll()
+      slideCard.className = 'slide-card slide-enter'
+      animating = false
+    }, 380)
+  }
+
+  function next() { goTo((current + 1) % SLIDES[lang].length, 'next') }
+  function resetTimer() { clearInterval(timerRef); timerRef = setInterval(next, 4800) }
+
+  // Lang
+  langBtn.addEventListener('click', e => { e.stopPropagation(); langDd.classList.toggle('open') })
+  document.querySelectorAll('.dd-item').forEach(item => {
+    item.addEventListener('click', e => {
+      e.stopPropagation()
+      lang = item.dataset.lang
+      current = 0
+      formView.style.display = ''
+      successView.style.display = 'none'
+      nameInput.value = ''; phoneInput.value = ''
+      netError.style.display = 'none'
+      fiName.classList.remove('fi-err'); fiPhone.classList.remove('fi-err')
+      renderAll()
+      langDd.classList.remove('open')
+    })
+  })
+  document.addEventListener('click', () => langDd.classList.remove('open'))
+
+  nameInput.addEventListener('input', () => fiName.classList.remove('fi-err'))
+  phoneInput.addEventListener('input', () => fiPhone.classList.remove('fi-err'))
+
+  submitBtn.addEventListener('click', async () => {
+    if (sending) return
+    const t = TRANSLATIONS[lang]
+    const name = nameInput.value.trim()
+    const phone = phoneInput.value.trim()
+    let hasErr = false
+    if (!name) { fiName.classList.add('fi-err'); hasErr = true } else fiName.classList.remove('fi-err')
+    if (!phone || phone.replace(/\D/g,'').length < 7) { fiPhone.classList.add('fi-err'); hasErr = true } else fiPhone.classList.remove('fi-err')
+    if (hasErr) return
+    sending = true
+    netError.style.display = 'none'
+    submitBtn.disabled = true
+    submitBtn.innerHTML = `<span class="fc-spinner"></span> ${t.btnSending}`
+    try {
+      await sendToBitrix({ name, phone, lang })
+      formView.style.display = 'none'
+      successView.style.display = ''
+      successTitle.textContent = `${t.successTitle}, ${name}!`
+      successMsg.textContent = t.successMsg
+    } catch (err) {
+      netError.textContent = t.errNetwork
+      netError.style.display = ''
+    } finally {
+      sending = false
+      submitBtn.disabled = false
+      submitBtn.textContent = t.btnText
+    }
+  })
+
+  resetBtn.addEventListener('click', () => {
+    nameInput.value = ''; phoneInput.value = ''
+    netError.style.display = 'none'
+    formView.style.display = ''
+    successView.style.display = 'none'
+    fiName.classList.remove('fi-err'); fiPhone.classList.remove('fi-err')
+    renderAll()
+  })
+
+  renderAll()
+  timerRef = setInterval(next, 4800)
+</script>
+</body>
+</html>
