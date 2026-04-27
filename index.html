@@ -14,347 +14,230 @@
 
     .page {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
-      color: #fff;
-      overflow: hidden;
+      color: #fff; overflow: hidden;
     }
 
     /* NAVBAR */
     .navbar {
       position: relative; z-index: 10;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 20px 40px 40px;
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 20px; padding: 20px 40px 40px;
+      max-width: 1280px; width: 100%; margin: 0 auto;
     }
-    .nav-logo {
-      width: 176px;
-      display: flex; align-items: center; gap: 13px;
-      text-decoration: none; flex-shrink: 0;
-    }
+    .nav-logo { width: 176px; display: flex; align-items: center; gap: 13px; text-decoration: none; flex-shrink: 0; }
     .logo-img { width: 100%; }
-
     .nav-lang {
       display: flex; align-items: center; gap: 7px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 30px; padding: 9px 16px;
-      cursor: pointer; font-size: 13px; font-weight: 600;
-      transition: background .2s;
-      position: relative;
-      user-select: none;
-      z-index: 200;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 30px; padding: 9px 16px; cursor: pointer;
+      font-size: 13px; font-weight: 600; transition: background .2s;
+      position: relative; user-select: none; z-index: 200;
     }
     .nav-lang:hover { background: rgba(255,255,255,0.12); }
     .nav-lang .flag { font-size: 18px; }
     .nav-lang .chevron { font-size: 10px; color: rgba(255,255,255,0.55); margin-left: 2px; }
-
     .lang-dd {
       position: absolute; top: calc(100% + 8px); right: 0;
-      background: #131f3a;
-      border: 1px solid rgba(255,255,255,0.12);
+      background: #131f3a; border: 1px solid rgba(255,255,255,0.12);
       border-radius: 14px; overflow: hidden;
       box-shadow: 0 12px 40px rgba(0,0,0,0.55);
-      z-index: 300; min-width: 145px;
-      display: none;
+      z-index: 300; min-width: 145px; display: none;
     }
     .lang-dd.open { display: block; }
-    .dd-item {
-      padding: 11px 18px;
-      font-size: 13px; font-weight: 500;
-      transition: background .15s; white-space: nowrap;
-      cursor: pointer; color: #fff;
-    }
+    .dd-item { padding: 11px 18px; font-size: 13px; font-weight: 500; transition: background .15s; white-space: nowrap; cursor: pointer; color: #fff; }
     .dd-item:hover { background: rgba(255,255,255,0.08); }
 
     /* MAIN */
     .main {
-      flex: 1;
-      position: relative; z-index: 10;
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 0px 40px 40px;
-      max-width: 1280px;
-      width: 100%;
-      margin: 40px auto;
+      flex: 1; position: relative; z-index: 10;
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 0 40px 40px; max-width: 1280px; width: 100%; margin: 40px auto;
     }
 
     /* LEFT */
     .left { flex: 1; display: flex; flex-direction: column; gap: 32px; }
+    .hero-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(34px, 4.2vw, 60px); line-height: 1.1; color: #fff; }
 
-    .hero-title {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: clamp(34px, 4.2vw, 60px);
-      line-height: 1.1;
-      color: #fff;
-    }
-
-    /* ── NEW SLIDER ── */
+    /* SLIDER */
     .slider-outer { display: flex; flex-direction: column; gap: 14px; }
-
     .slide-card {
-      width: 540px;
-      min-height: 300px;
-      border-radius: 22px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
-      flex-shrink: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      width: 540px; min-height: 300px; border-radius: 22px; overflow: hidden;
+      position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+      flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr;
     }
     .slide-card.slide-enter     { animation: sEnter .38s cubic-bezier(.22,1,.36,1) both; }
     .slide-card.slide-exit-next { animation: sExitL .38s cubic-bezier(.22,1,.36,1) both; }
     .slide-card.slide-exit-prev { animation: sExitR .38s cubic-bezier(.22,1,.36,1) both; }
-
     @keyframes sEnter { from{opacity:0;transform:scale(.95) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
     @keyframes sExitL { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-20px) scale(.96)} }
     @keyframes sExitR { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(20px) scale(.96)} }
 
-    /* Left photo area */
-    .sc-photo {
-      position: relative;
-      overflow: hidden;
-      min-height: 280px;
-    }
-    .sc-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-    }
-    /* Placeholder when no real image */
-    .sc-photo-placeholder {
-      width: 100%;
-      height: 100%;
-      min-height: 280px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 0;
-      font-size: 80px;
-      background: rgba(0,0,0,0.15);
-    }
+    .sc-photo { position: relative; overflow: hidden; min-height: 280px; }
+    .sc-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .sc-photo-placeholder { width: 100%; height: 100%; min-height: 280px; display: flex; align-items: flex-end; justify-content: center; background: rgba(0,0,0,0.1); }
+    .sc-body { display: flex; flex-direction: column; justify-content: center; padding: 28px 24px 36px 20px; gap: 14px; position: relative; }
+    .sc-body::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; border:3px solid rgba(255,255,255,0.15); border-radius:50%; pointer-events:none; }
+    .sc-body::after  { content:''; position:absolute; bottom:10px; right:10px; width:60px; height:60px; border:2px solid rgba(255,255,255,0.12); border-radius:50%; pointer-events:none; }
+    .sc-tag { display:none; background:rgba(255,255,255,0.22); border-radius:30px; padding:4px 14px; font-size:10px; font-weight:800; letter-spacing:1.5px; color:#fff; text-transform:uppercase; width:fit-content; }
+    .sc-title { font-family:'Montserrat',sans-serif; font-weight:900; font-size:clamp(18px,2.2vw,26px); line-height:1.15; color:#fff; text-transform:uppercase; }
+    .sc-desc { font-size:12px; color:rgba(255,255,255,0.85); line-height:1.65; }
+    .sc-deco { position:absolute; top:0; right:0; bottom:0; left:0; pointer-events:none; overflow:hidden; border-radius:22px; }
+    .sc-deco span { position:absolute; display:block; background:rgba(255,255,255,0.06); transform-origin:center; }
+    .sc-deco span:nth-child(1) { width:3px; height:200%; top:-50%; right:42%; transform:rotate(20deg); }
+    .sc-deco span:nth-child(2) { width:2px; height:200%; top:-50%; right:38%; transform:rotate(20deg); }
 
-    /* Right text area */
-    .sc-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 28px 24px 36px 20px;
-      gap: 14px;
-      position: relative;
-    }
-
-    /* Diagonal accent lines (like in the screenshots) */
-    .sc-body::before {
-      content: '';
-      position: absolute;
-      top: -30px; right: -30px;
-      width: 120px; height: 120px;
-      border: 3px solid rgba(255,255,255,0.15);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .sc-body::after {
-      content: '';
-      position: absolute;
-      bottom: 10px; right: 10px;
-      width: 60px; height: 60px;
-      border: 2px solid rgba(255,255,255,0.12);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .sc-tag {
-      display: inline-block;
-      background: rgba(255,255,255,0.22);
-      border-radius: 30px;
-      padding: 4px 14px;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      color: #fff;
-      text-transform: uppercase;
-      width: fit-content;
-    }
-
-    .sc-title {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      font-size: clamp(18px, 2.2vw, 26px);
-      line-height: 1.15;
-      color: #fff;
-      text-transform: uppercase;
-    }
-
-    .sc-desc {
-      font-size: 12px;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.65;
-    }
-
-    /* Decorative diagonal lines like in screenshots */
-    .sc-deco {
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      pointer-events: none;
-      overflow: hidden;
-      border-radius: 22px;
-    }
-    .sc-deco span {
-      position: absolute;
-      display: block;
-      background: rgba(255,255,255,0.06);
-      transform-origin: center;
-    }
-    .sc-deco span:nth-child(1) {
-      width: 3px; height: 200%;
-      top: -50%; right: 42%;
-      transform: rotate(20deg);
-    }
-    .sc-deco span:nth-child(2) {
-      width: 2px; height: 200%;
-      top: -50%; right: 38%;
-      transform: rotate(20deg);
-    }
-
-    /* DOTS */
-    .sdots { display: flex; gap: 7px; }
-    .sdot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.28); cursor: pointer;
-      transition: width .3s cubic-bezier(.34,1.56,.64,1), background .3s, border-radius .3s;
-    }
-    .sdot.active { width: 26px; border-radius: 4px; background: var(--c, #fff); }
+    .sdots { display:flex; gap:7px; }
+    .sdot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.28); cursor:pointer; transition:width .3s cubic-bezier(.34,1.56,.64,1), background .3s, border-radius .3s; }
+    .sdot.active { width:26px; border-radius:4px; background:var(--c,#fff); }
 
     /* ARROW */
-    .arrow-wrap { flex-shrink: 0; opacity: 0.85; }
+    .arrow-wrap { flex-shrink:0; opacity:0.85; }
 
-    /* FORM */
-    .right { flex-shrink: 0; width: 476px; }
+    /* FORM CARD */
+    .right { flex-shrink:0; width:476px; }
     .form-card {
-      width: 476px; height: 637px;
-      background: #fff; border-radius: 24px;
-      border: 2px solid #5aabff;
-      box-shadow: 0 0 0 1px rgba(30,144,255,0.07), 0 24px 60px rgba(0,0,0,0.45);
-      padding: 44px 36px 36px;
-      display: flex; flex-direction: column; justify-content: space-between;
+      width:476px; height: 560px; background:#fff; border-radius:24px;
+      border:2px solid #5aabff;
+      box-shadow:0 0 0 1px rgba(30,144,255,0.07), 0 24px 60px rgba(0,0,0,0.45);
+      padding:36px 36px 32px;
+      display:flex; flex-direction:column;
     }
-    .fc-header { text-align: center; height: 200px;}
+    .fc-header { text-align:center; margin-bottom:8px; width: auto; height: 115px; }
     .fc-title {
-      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 45px;
-      background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      line-height: 1.28; margin-bottom: 12px;
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:38px;
+      background:linear-gradient(135deg,#0d3b51 0%,#1689bf 50%,#1299d5 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      line-height:1.2; margin-bottom:10px;
     }
-    .fc-sub { font-size: 13px; color: #94a3b8; font-style: italic; }
-    .fc-fields { height: 200px; display: flex; flex-direction: column; gap: 0; flex: 1; justify-content: center; margin: 55px 10px; }
-    .fi { border-bottom: 1.5px solid #e2e8f0; padding: 18px 4px; position: relative; transition: border-color .2s; }
-    .fi:focus-within { border-color: var(--blue); }
-    .fi.fi-err { border-color: #f87171 !important; }
-    .fi input {
-      width: 100%; border: none; outline: none;
-      font-family: 'Inter', sans-serif; font-size: 16px; color: #1a1a2e; background: transparent;
-    }
-    .fi input::placeholder { color: #94a3b8; }
-    .fc-btn {
-      width: 100%; height: 60px;
-      background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
-      color: #fff; border: none; cursor: pointer; border-radius: 16px;
-      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px;
-      transition: filter .15s, transform .15s, box-shadow .15s; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-    }
-    .fc-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(30,144,255,0.45); }
-    .fc-btn:active { transform: translateY(0); }
-    .fc-btn:disabled { opacity: 0.75; cursor: not-allowed; transform: none; box-shadow: none; filter: none; }
+    .fc-sub { font-size:13px; color:#94a3b8; font-style:italic; }
 
-    .fc-error { font-size: 13px; color: #ef4444; text-align: center; padding: 0 4px; line-height: 1.5; }
+    /* FIELDS */
+    .fc-fields { display:flex; flex-direction:column; margin:16px 0 18px; gap: 5px; }
 
-    .fc-spinner {
-      display: inline-block; width: 18px; height: 18px;
-      border: 2.5px solid rgba(255,255,255,0.35); border-top-color: #fff;
-      border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .fi input:disabled { opacity: 0.6; cursor: not-allowed; }
+    .fi { border-bottom:1.5px solid #e2e8f0; padding:16px 4px; position:relative; transition:border-color .2s; }
+    .fi:focus-within { border-color:var(--blue); }
+    .fi.fi-err { border-color:#f87171 !important; }
+    .fi input { width:100%; border:none; outline:none; font-family:'Inter',sans-serif; font-size:16px; color:#1a1a2e; background:transparent; }
+    .fi input::placeholder { color:#94a3b8; }
+    .fi input:disabled { opacity:0.6; cursor:not-allowed; }
 
-    /* SUCCESS */
-    .fc-success {
-      display: flex; flex-direction: column; align-items: center; gap: 14px;
-      text-align: center; animation: popIn .35s cubic-bezier(.34,1.56,.64,1);
-      height: 100%; justify-content: center;
-    }
-    @keyframes popIn { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
-    .fc-check {
-      width: 68px; height: 68px; border-radius: 50%;
-      background: #22c55e; display: flex; align-items: center; justify-content: center;
-      font-size: 30px; color: #fff;
-    }
-    .fc-success h3 { font-family:'Montserrat',sans-serif; font-weight:800; font-size:22px; color:#0b1a3e; }
-    .fc-success p  { font-size:14px; color:#64748b; }
-    .fc-reset {
-      background: transparent; border: 1.5px solid #e2e8f0; border-radius: 10px;
-      padding: 9px 24px; font-size: 13px; cursor: pointer; color: #64748b;
+    .fs-wrap {
+      position: relative;
+      border-bottom: 1.5px solid #e2e8f0;
       transition: border-color .2s;
     }
-    .fc-reset:hover { border-color: #0b1a3e; color: #0b1a3e; }
+    .fs-wrap.open   { border-color: var(--blue); }
+    .fs-wrap.fs-err { border-color: #f87171 !important; }
+
+    .fs-trigger {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 4px;
+      cursor: pointer; user-select: none;
+      font-family: 'Inter', sans-serif; font-size: 16px; color: #94a3b8;
+    }
+    .fs-trigger.has-value { color: #1a1a2e; }
+
+    .fs-arrow {
+      font-size: 11px; color: #94a3b8; flex-shrink: 0;
+      transition: transform .22s cubic-bezier(.22,1,.36,1);
+    }
+    .fs-wrap.open .fs-arrow { transform: rotate(180deg); }
+
+    .fs-dropdown {
+      position: absolute; left: -4px; right: -4px;
+      top: calc(100% + 2px);
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      box-shadow: 0 10px 36px rgba(0,0,0,0.13);
+      z-index: 500;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity .2s, transform .22s cubic-bezier(.22,1,.36,1);
+    }
+    .fs-wrap.open .fs-dropdown {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .fs-option {
+      padding: 13px 16px;
+      font-size: 15px; color: #1a1a2e;
+      cursor: pointer; transition: background .15s;
+    }
+    .fs-option:hover  { background: #f0f7ff; }
+    .fs-option.active { background: #e8f4ff; color: #1689bf; font-weight: 600; }
+
+    .filial-row { display: none; }
+    .filial-row.visible {
+      display: block;
+      animation: fadeDown .28s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* SUBMIT */
+    .fc-btn {
+      width:100%; height:58px;
+      background:linear-gradient(135deg,#0d3b51 0%,#1689bf 50%,#1299d5 100%);
+      color:#fff; border:none; cursor:pointer; border-radius:16px;
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:17px;
+      transition:filter .15s, transform .15s, box-shadow .15s;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin-top:145px; flex-shrink:0;
+    }
+    .fc-btn:hover { filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 12px 32px rgba(30,144,255,0.45); }
+    .fc-btn:active { transform:translateY(0); }
+    .fc-btn:disabled { opacity:0.75; cursor:not-allowed; transform:none; box-shadow:none; filter:none; }
+
+    .fc-error { font-size:13px; color:#ef4444; text-align:center; padding:6px 4px 0; line-height:1.5; display:none; }
+
+    .fc-spinner { display:inline-block; width:18px; height:18px; border:2.5px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; flex-shrink:0; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* SUCCESS */
+    .fc-success { display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; animation:popIn .35s cubic-bezier(.34,1.56,.64,1); padding:40px 0; }
+    @keyframes popIn { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
+    .fc-check { width:68px; height:68px; border-radius:50%; background:#22c55e; display:flex; align-items:center; justify-content:center; font-size:30px; color:#fff; }
+    .fc-success h3 { font-family:'Montserrat',sans-serif; font-weight:800; font-size:22px; color:#0b1a3e; }
+    .fc-success p  { font-size:14px; color:#64748b; }
+    .fc-reset { background:transparent; border:1.5px solid #e2e8f0; border-radius:10px; padding:9px 24px; font-size:13px; cursor:pointer; color:#64748b; transition:border-color .2s; }
+    .fc-reset:hover { border-color:#0b1a3e; color:#0b1a3e; }
 
     /* RESPONSIVE */
-    @media (max-width: 1200px) { .arrow-wrap { display: none; } .main { gap: 28px; } }
-    @media (max-width: 1024px) {
-      .navbar { padding: 20px 24px; }
-      .main { padding: 0 24px 32px; gap: 24px; }
-      .right { width: 400px; }
-      .form-card { width: 100%; height: auto; min-height: 580px; }
-      .fc-title { font-size: 20px; }
+    @media (max-width:1200px) { .arrow-wrap{display:none;} .main{gap:28px;} }
+    @media (max-width:1024px) {
+      .navbar{padding:20px 24px;}
+      .main{padding:0 24px 32px; gap:24px;}
+      .right{width:400px;} .form-card{width:100%;} .fc-title{font-size:28px;}
     }
-    @media (max-width: 860px) {
-      html, body { height: auto; }
-      .page { min-height: 100svh; overflow: auto; }
-      .navbar { padding: 16px 20px; }
-      .nav-logo { width: 140px; }
-      .main { flex-direction: column; align-items: stretch; padding: 0 20px 40px; margin-top: 12px; gap: 28px; }
-      .left { gap: 22px; }
-      .hero-title { font-size: clamp(26px, 7vw, 40px); }
-      .slide-card { width: 100%; }
-      .sc-title { font-size: 16px; }
-      .sc-desc { font-size: 11px; }
-      .right { width: 100%; }
-      .form-card { width: 100%; height: auto; min-height: unset; padding: 32px 24px 28px; }
-      .fc-title { font-size: 20px; }
-      .fc-btn { height: 54px; font-size: 15px; }
+    @media (max-width:860px) {
+      html,body{height:auto;} .page{min-height:100svh; overflow:auto;}
+      .navbar{padding:16px 20px;} .nav-logo{width:140px;}
+      .main{flex-direction:column; align-items:stretch; padding:0 20px 40px; margin-top:12px; gap:28px;}
+      .left{gap:22px;} .hero-title{font-size:clamp(26px,7vw,40px);}
+      .slide-card{width:100%;}
+      .right{width:100%;} .form-card{width:100%;} .fc-title{font-size:26px;} .fc-btn{height:54px; font-size:15px;}
     }
-    @media (max-width: 480px) {
-      .navbar { padding: 14px 16px; }
-      .nav-logo { width: 120px; }
-      .main { padding: 0 16px 0px; gap: 22px; z-index: 9; margin: 60px auto; }
-      .hero-title { font-size: clamp(22px, 8vw, 34px); }
-      .sc-title { font-size: 14px; }
-      .sc-desc { font-size: 10px; line-height: 1.5; }
-      .sc-body { padding: 18px 14px 30px 14px; gap: 8px; }
-      .form-card { padding: 28px 20px 24px; border-radius: 20px; }
-      .fc-header { height: auto;}
-      .fc-fields {margin: 30px 10px; }
-      .fc-title { font-size: 18px; }
-      .fi input { font-size: 15px; }
-      .fc-btn { height: 52px; font-size: 14px; border-radius: 14px; }
+    @media (max-width:480px) {
+      .navbar{padding:14px 16px;} .nav-logo{width:120px;}
+      .main{padding:0 16px; gap:22px; z-index:9; margin:50px auto;}
+      .hero-title{font-size:clamp(22px,8vw,34px);}
+      .form-card{padding:24px 18px 22px; border-radius:20px;} .fc-title{font-size:22px;}
+      .fi input,.fs-trigger{font-size:15px;} .fc-btn{height:52px; font-size:14px; border-radius:14px;}
     }
   </style>
 </head>
 <body>
 
-<div class="page" id="page">
+<div class="page">
 
   <!-- NAVBAR -->
   <nav class="navbar">
@@ -378,24 +261,14 @@
     <!-- LEFT -->
     <div class="left">
       <h1 class="hero-title" id="heroTitle"></h1>
-
-      <!-- SLIDER -->
       <div class="slider-outer">
         <div class="slide-card slide-enter" id="slideCard">
-          <!-- Decorative diagonal lines -->
-          <div class="sc-deco">
-            <span></span>
-            <span></span>
-          </div>
-          <!-- Left: photo -->
-          <div class="sc-photo" id="scPhoto">
-            <div class="sc-photo-placeholder" id="scPlaceholder"></div>
-          </div>
-          <!-- Right: text -->
-          <div class="sc-body" id="scBody">
-            <span class="sc-tag" id="scTag"></span>
-            <h3 class="sc-title" id="scTitle"></h3>
-            <p class="sc-desc" id="scDesc"></p>
+          <div class="sc-deco"><span></span><span></span></div>
+          <div class="sc-photo" id="scPhoto"></div>
+          <div class="sc-body">
+            <span class="sc-tag"  id="scTag"></span>
+            <h3  class="sc-title" id="scTitle"></h3>
+            <p   class="sc-desc"  id="scDesc"></p>
           </div>
         </div>
         <div class="sdots" id="sdots"></div>
@@ -411,361 +284,400 @@
 
     <!-- RIGHT — FORM -->
     <div class="right">
-      <div class="form-card" id="formCard">
+      <div class="form-card">
+
         <div id="formView">
           <div class="fc-header">
             <h2 class="fc-title" id="fcTitle"></h2>
-            <p class="fc-sub" id="fcSub"></p>
+            <p  class="fc-sub"   id="fcSub"></p>
           </div>
+
           <div class="fc-fields">
             <div class="fi" id="fiName">
-              <input type="text" id="nameInput" />
+              <input type="text" id="nameInput" autocomplete="off" />
             </div>
             <div class="fi" id="fiPhone">
-              <input type="tel" id="phoneInput" />
+              <input type="tel" id="phoneInput" autocomplete="off" />
+            </div>
+            <div class="fs-wrap" id="cityWrap">
+              <div class="fs-trigger" id="cityTrigger">
+                <span id="cityLabel"></span>
+                <span class="fs-arrow">▾</span>
+              </div>
+              <div class="fs-dropdown" id="cityDropdown"></div>
+            </div>
+            <div class="filial-row" id="filialRow">
+              <div class="fs-wrap" id="filialWrap">
+                <div class="fs-trigger" id="filialTrigger">
+                  <span id="filialLabel"></span>
+                  <span class="fs-arrow">▾</span>
+                </div>
+                <div class="fs-dropdown" id="filialDropdown"></div>
+              </div>
             </div>
           </div>
-          <p class="fc-error" id="netError" style="display:none"></p>
+
+          <p class="fc-error" id="netError"></p>
           <button class="fc-btn" id="submitBtn"></button>
         </div>
+
         <div class="fc-success" id="successView" style="display:none">
           <div class="fc-check">✓</div>
           <h3 id="successTitle"></h3>
-          <p id="successMsg"></p>
+          <p  id="successMsg"></p>
           <button class="fc-reset" id="resetBtn"></button>
         </div>
+
       </div>
     </div>
-
   </main>
 </div>
 
 <script>
-  const BITRIX_WEBHOOK = 'https://YOUR_DOMAIN.bitrix24.ru/rest/1/YOUR_TOKEN'
-  const LEAD_SOURCE    = 'WEB'
+/* ── CONFIG ── */
+const BITRIX_WEBHOOK = 'https://YOUR_DOMAIN.bitrix24.ru/rest/1/YOUR_TOKEN'
+const LEAD_SOURCE    = 'WEB'
 
-  async function sendToBitrix({ name, phone, lang }) {
-    const url  = `${BITRIX_WEBHOOK}/crm.lead.add.json`
-    const body = new FormData()
-    body.append('fields[TITLE]',               `Colba — ${name}`)
-    body.append('fields[NAME]',                name)
-    body.append('fields[PHONE][0][VALUE]',     phone)
-    body.append('fields[PHONE][0][VALUE_TYPE]','WORK')
-    body.append('fields[SOURCE_ID]',           LEAD_SOURCE)
-    body.append('fields[COMMENTS]',            `Til: ${lang === 'uz' ? "O'zbek" : 'Rus'} | Sayt: Colba lid forma`)
-    body.append('fields[STATUS_ID]',           'NEW')
-    const res = await fetch(url, { method: 'POST', body })
-    if (!res.ok) throw new Error(`Bitrix error: ${res.status}`)
-    return res.json()
+async function sendToBitrix({ name, phone, city, filial, lang }) {
+  const url  = `${BITRIX_WEBHOOK}/crm.lead.add.json`
+  const body = new FormData()
+  body.append('fields[TITLE]',                `Colba — ${name}`)
+  body.append('fields[NAME]',                 name)
+  body.append('fields[PHONE][0][VALUE]',      phone)
+  body.append('fields[PHONE][0][VALUE_TYPE]', 'WORK')
+  body.append('fields[SOURCE_ID]',            LEAD_SOURCE)
+  body.append('fields[COMMENTS]',
+    `Til: ${lang==='uz'?"O'zbek":'Rus'} | Shahar: ${city}${filial?' | Filial: '+filial:''} | Sayt: Colba lid forma`)
+  body.append('fields[STATUS_ID]', 'NEW')
+  const res = await fetch(url, { method:'POST', body })
+  if (!res.ok) throw new Error(`Bitrix ${res.status}`)
+  return res.json()
+}
+
+/* ── DATA ── */
+const T = {
+  uz: {
+    heroTitle: ['KIMYO va BIOLOGIYAni', "o'rganishni", 'xohlaysizmi?'],
+    formTitle: '3 kunlik sinov darsiga yoziling!',
+    formSub:   '*Faqat Toshkent shahrida yashovchilar uchun!',
+    namePh:    'Ismingiz',
+    phonePh:   'Telefon raqamingiz',
+    cityPh:    'Shahringizni tanlang',
+    filialPh:  'Filialni tanlang',
+    btnText:   "Men bilan bog'laning!",
+    btnWait:   'Yuborilmoqda...',
+    okTitle:   'Rahmat',
+    okMsg:     "Tez orada siz bilan bog'lanamiz.",
+    back:      'Qaytish',
+    langLbl:   'Uzb',
+    errNet:    "Xatolik yuz berdi. Qayta urinib ko'ring.",
+    cities:  [ { v:'toshkent', l:'Toshkent' }, { v:'boshqa', l:'Boshqa shahar' } ],
+    filials: [ { v:'chilonzor', l:'Chilonzor filiali' }, { v:'yunusobod', l:'Yunusobod filiali' }, { v:'mirobod', l:'Mirobod filiali' }, { v:'sergeli', l:'Sergeli filiali' } ],
+  },
+  ru: {
+    heroTitle: ['Хотите', 'выучить', 'ХИМИЯ и БИОЛОГИЯ?'],
+    formTitle: 'Запишитесь на 3-дневный пробный урок!',
+    formSub:   '*Только для жителей города Ташкент!',
+    namePh:    'Ваше имя',
+    phonePh:   'Ваш номер телефона',
+    cityPh:    'Выберите город',
+    filialPh:  'Выберите филиал',
+    btnText:   'Свяжитесь со мной!',
+    btnWait:   'Отправка...',
+    okTitle:   'Спасибо',
+    okMsg:     'Мы свяжемся с вами в ближайшее время.',
+    back:      'Назад',
+    langLbl:   'Rus',
+    errNet:    'Произошла ошибка. Попробуйте снова.',
+    cities:  [ { v:'toshkent', l:'Ташкент' }, { v:'boshqa', l:'Другой город' } ],
+    filials: [ { v:'chilonzor', l:'Филиал Чиланзар' }, { v:'yunusobod', l:'Филиал Юнусабад' }, { v:'mirobod', l:'Филиал Мирабад' }, { v:'sergeli', l:'Филиал Сергели' } ],
+  },
+}
+
+const SLIDES = {
+  uz: [
+    { id:1, tag:"O'QITUVCHILAR", color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"O'QITUVCHILARNING\nTAJRIBASI",   desc:"Har bir o'qituvchi maxsus kurslarni tamomlagan, IELTS 9.0 gacha. Bunday ustozlarni hech nimaga alishmaymiz." },
+    { id:2, tag:'NATIJA',        color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"100%\nNATIJA TIZIMI",           desc:"Dasturimizni to'liq yakunlaganlar tibbiyot oliygohlariga muddatidan oldin kirish natijasiga erishmoqda." },
+    { id:3, tag:'YORDAM',        color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"BEPUL\nYORDAMCHI O'QITUVCHI", desc:"Mavzuni o'zlashtirolmasangiz, yordamchi o'qituvchilar har doim yoningizda va qayta tushuntirib berishadi." },
+    { id:4, tag:'INTENSIV',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"HAR KUNLIK\nINTENSIV DARSLAR", desc:"Haftasiga 5 kun, 4-5 soatlik intensiv mashg'ulotlar orqali maksimal natijaga chiqamiz." },
+    { id:5, tag:'NAZORAT',       color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"HAR KUNLIK\nTEST TIZIMI",      desc:"Har kuni test orqali bilim nazorati qilinadi va real imtihon darajasiga olib chiqiladi." },
+    { id:6, tag:'BONUS',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"BEPUL\nMAJBURIY FANLAR",      desc:"Ona tili, tarix va matematika fanlari mutlaqo bepul o'qitiladi." },
+  ],
+  ru: [
+    { id:1, tag:'ПРЕПОДАВАТЕЛИ', color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"ОПЫТ\nПРЕПОДАВАТЕЛЕЙ",    desc:"Каждый преподаватель прошёл спецкурсы, IELTS до 9.0. Таких наставников мы ни на что не меняем." },
+    { id:2, tag:'РЕЗУЛЬТАТ',     color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"СИСТЕМА\n100% РЕЗУЛЬТАТА",   desc:"Студенты, завершившие программу, поступают в медвузы раньше срока." },
+    { id:3, tag:'ПОДДЕРЖКА',     color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"БЕСПЛАТНЫЙ\nНАСТАВНИК",      desc:"Помощники-преподаватели всегда рядом и готовы объяснить любую тему заново." },
+    { id:4, tag:'ИНТЕНСИВ',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"ЕЖЕДНЕВНЫЕ\nЗАНЯТИЯ",         desc:"5 дней в неделю по 4–5 часов интенсивной подготовки для максимального результата." },
+    { id:5, tag:'КОНТРОЛЬ',      color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"ЕЖЕДНЕВНЫЕ\nТЕСТЫ",          desc:"Постоянный контроль знаний через ежедневные тесты, приближённые к реальным." },
+    { id:6, tag:'БОНУС',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"БЕСПЛАТНЫЕ\nПРЕДМЕТЫ",      desc:"Родной язык, история и математика — полностью бесплатно." },
+  ],
+}
+
+const FLAGS = { uz:'🇺🇿', ru:'🇷🇺' }
+
+/* ── STATE ── */
+let lang = 'uz', current = 0, animating = false, timer = null, sending = false
+let selCity = '', selFilial = ''
+
+/* ── DOM REFS ── */
+const g = id => document.getElementById(id)
+const heroTitle    = g('heroTitle'),   slideCard     = g('slideCard'),    scPhoto        = g('scPhoto')
+const scTag        = g('scTag'),       scTitle       = g('scTitle'),      scDesc         = g('scDesc'),     sdots = g('sdots')
+const fcTitle      = g('fcTitle'),     fcSub         = g('fcSub')
+const nameInput    = g('nameInput'),   phoneInput    = g('phoneInput')
+const fiName       = g('fiName'),      fiPhone       = g('fiPhone')
+const cityWrap     = g('cityWrap'),    cityTrigger   = g('cityTrigger'),  cityLabelEl    = g('cityLabel'),   cityDropdown  = g('cityDropdown')
+const filialRow    = g('filialRow'),   filialWrap    = g('filialWrap'),   filialTrigger  = g('filialTrigger'), filialLabelEl = g('filialLabel'), filialDropdown = g('filialDropdown')
+const submitBtn    = g('submitBtn'),   netError      = g('netError'),     formView       = g('formView'),    successView   = g('successView')
+const successTitle = g('successTitle'), successMsg   = g('successMsg'),   resetBtn       = g('resetBtn')
+const langBtn      = g('langBtn'),     langDd        = g('langDd'),       flagIcon       = g('flagIcon'),    langLabel     = g('langLabel')
+
+/* ── DROPDOWN HELPERS ── */
+function buildDropdown(dropdownEl, options, activeVal, onPick) {
+  dropdownEl.innerHTML = ''
+  options.forEach(opt => {
+    const div = document.createElement('div')
+    div.className = 'fs-option' + (opt.v === activeVal ? ' active' : '')
+    div.textContent = opt.l
+    div.addEventListener('mousedown', e => { e.preventDefault(); e.stopPropagation(); onPick(opt) })
+    dropdownEl.appendChild(div)
+  })
+}
+
+function closeAllSelects() {
+  cityWrap.classList.remove('open')
+  filialWrap.classList.remove('open')
+  langDd.classList.remove('open')
+}
+
+/* ── CITY SELECT ── */
+cityTrigger.addEventListener('click', e => {
+  e.stopPropagation()
+  cityWrap.classList.contains('open') ? closeAllSelects() : (closeAllSelects(), cityWrap.classList.add('open'))
+})
+
+function onCityPick(opt) {
+  selCity = opt.v
+  selFilial = ''
+  cityLabelEl.textContent = opt.l
+  cityTrigger.classList.add('has-value')
+  cityWrap.classList.remove('open', 'fs-err')
+  buildDropdown(cityDropdown, T[lang].cities, selCity, onCityPick)
+
+  if (selCity === 'toshkent') {
+    filialLabelEl.textContent = T[lang].filialPh
+    filialTrigger.classList.remove('has-value')
+    filialWrap.classList.remove('fs-err')
+    buildDropdown(filialDropdown, T[lang].filials, '', onFilialPick)
+    filialRow.classList.remove('visible')
+    void filialRow.offsetWidth
+    filialRow.classList.add('visible')
+  } else {
+    filialRow.classList.remove('visible')
+    filialWrap.classList.remove('fs-err')
+    selFilial = ''
   }
+}
 
-  const TRANSLATIONS = {
-    uz: {
-      heroTitle: ['KIMYO va BIOLOGIYAni', "o'rganishni", 'xohlaysizmi?'],
-      formTitle: '3 kunlik sinov darsiga yoziling!',
-      formSub: '*Faqat Toshkent shahrida yashovchilar uchun!',
-      namePlaceholder: 'Ismingiz',
-      phonePlaceholder: 'Telefon raqamingiz',
-      btnText: "Men bilan bog'laning!",
-      btnSending: 'Yuborilmoqda...',
-      successTitle: 'Rahmat',
-      successMsg: "Tez orada siz bilan bog'lanamiz.",
-      backBtn: 'Qaytish',
-      langLabel: 'Uzb',
-      errNetwork: "Xatolik yuz berdi. Iltimos qayta urinib ko'ring.",
-    },
-    ru: {
-      heroTitle: ['Хотите', 'выучить', 'ХИМИЯ и БИОЛОГИЯ?'],
-      formTitle: 'Запишитесь на 3-дневный пробный урок!',
-      formSub: '*Только для жителей города Ташкент!',
-      namePlaceholder: 'Ваше имя',
-      phonePlaceholder: 'Ваш номер телефона',
-      btnText: 'Свяжитесь со мной!',
-      btnSending: 'Отправка...',
-      successTitle: 'Спасибо',
-      successMsg: 'Мы свяжемся с вами в ближайшее время.',
-      backBtn: 'Назад',
-      langLabel: 'Rus',
-      errNetwork: 'Произошла ошибка. Пожалуйста, попробуйте снова.',
-    }
-  }
+/* ── FILIAL SELECT ── */
+filialTrigger.addEventListener('click', e => {
+  e.stopPropagation()
+  filialWrap.classList.contains('open') ? closeAllSelects() : (closeAllSelects(), filialWrap.classList.add('open'))
+})
 
-  /* 
-    SLIDES — imagePath ga o'z rasmlaringizni qo'ying.
-    Masalan: imagePath: 'images/ustozlar.png'
-    Agar rasm yo'q bo'lsa, emoji ko'rsatiladi.
-  */
-  const SLIDES = {
-    uz: [
-      {
-        id:1, tag:"O'QITUVCHILAR", color:'#22c55e',
-        bg:'linear-gradient(135deg,#065f46 0%,#10b981 100%)',
-        imagePath: '',      /* <-- rasm yo'li: 'images/ustoz.jpg' */
-        emoji: '👩‍🏫',
-        title: "O'QITUVCHILARNING\nTAJRIBASI",
-        desc:"Har bir o'qituvchi maxsus o'rgatish kurslarini tamomlagan bo'lib, ularning IELTS natijalari 9.0 gacha. Bunday ustozlarni hech nimaga alishmaymiz."
-      },
-      {
-        id:2, tag:'NATIJA', color:'#3b82f6',
-        bg:'linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%)',
-        imagePath: '',
-        emoji: '🏆',
-        title:"100%\nNATIJA TIZIMI",
-        desc:"Dasturimizni to'liq yakunlagan o'quvchilar tibbiyot oliygohlariga muddatidan oldin kirish natijasiga erishmoqda."
-      },
-      {
-        id:3, tag:'YORDAM', color:'#f97316',
-        bg:'linear-gradient(135deg,#7c2d12 0%,#f97316 100%)',
-        imagePath: '',
-        emoji: '🤝',
-        title:"BEPUL\nYORDAMCHI\nO'QITUVCHI",
-        desc:"Mavzuni yaxshi o'zlashtirolmagan bo'lsangiz, yordamchi o'qituvchilar har doim yoningizda va istagan mavzuyingizni qayta tushuntirib berishadi."
-      },
-      {
-        id:4, tag:'INTENSIV', color:'#ef4444',
-        bg:'linear-gradient(135deg,#7f1d1d 0%,#ef4444 100%)',
-        imagePath: '',
-        emoji: '📅',
-        title:"HAR KUNLIK\nINTENSIV DARSLAR",
-        desc:"Haftasiga 5 kun, 4-5 soatlik intensiv mashg'ulotlar orqali maksimal natijaga chiqamiz."
-      },
-      {
-        id:5, tag:'NAZORAT', color:'#f59e0b',
-        bg:'linear-gradient(135deg,#78350f 0%,#f59e0b 100%)',
-        imagePath: '',
-        emoji: '📝',
-        title:"HAR KUNLIK\nTEST TIZIMI",
-        desc:"Har kuni test orqali bilim nazorati qilinadi va real imtihon darajasiga olib chiqiladi."
-      },
-      {
-        id:6, tag:'BONUS', color:'#06b6d4',
-        bg:'linear-gradient(135deg,#164e63 0%,#06b6d4 100%)',
-        imagePath: '',
-        emoji: '🎁',
-        title:"BEPUL\nMAJBURIY FANLAR",
-        desc:"Ona tili, tarix va matematika fanlari mutlaqo bepul o'qitiladi."
-      },
-    ],
-    ru: [
-      {
-        id:1, tag:'ПРЕПОДАВАТЕЛИ', color:'#22c55e',
-        bg:'linear-gradient(135deg,#065f46 0%,#10b981 100%)',
-        imagePath: '', emoji: '👩‍🏫',
-        title:"ОПЫТ\nПРЕПОДАВАТЕЛЕЙ",
-        desc:"Каждый преподаватель прошёл специальные курсы, их результаты IELTS — до 9.0. Таких наставников мы ни на что не меняем."
-      },
-      {
-        id:2, tag:'РЕЗУЛЬТАТ', color:'#3b82f6',
-        bg:'linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%)',
-        imagePath: '', emoji: '🏆',
-        title:"СИСТЕМА\n100% РЕЗУЛЬТАТА",
-        desc:"Студенты, завершившие программу, поступают в медицинские вузы раньше срока."
-      },
-      {
-        id:3, tag:'ПОДДЕРЖКА', color:'#f97316',
-        bg:'linear-gradient(135deg,#7c2d12 0%,#f97316 100%)',
-        imagePath: '', emoji: '🤝',
-        title:"БЕСПЛАТНЫЙ\nНАСТАВНИК",
-        desc:"Если вы не усваиваете материал, помощники-преподаватели всегда рядом и готовы объяснить любую тему заново."
-      },
-      {
-        id:4, tag:'ИНТЕНСИВ', color:'#ef4444',
-        bg:'linear-gradient(135deg,#7f1d1d 0%,#ef4444 100%)',
-        imagePath: '', emoji: '📅',
-        title:"ЕЖЕДНЕВНЫЕ\nИНТЕНСИВ ЗАНЯТИЯ",
-        desc:"5 дней в неделю по 4–5 часов интенсивной подготовки для максимального результата."
-      },
-      {
-        id:5, tag:'КОНТРОЛЬ', color:'#f59e0b',
-        bg:'linear-gradient(135deg,#78350f 0%,#f59e0b 100%)',
-        imagePath: '', emoji: '📝',
-        title:"ЕЖЕДНЕВНЫЕ\nТЕСТЫ",
-        desc:"Постоянный контроль знаний через ежедневные тесты, приближенные к реальным экзаменам."
-      },
-      {
-        id:6, tag:'БОНУС', color:'#06b6d4',
-        bg:'linear-gradient(135deg,#164e63 0%,#06b6d4 100%)',
-        imagePath: '', emoji: '🎁',
-        title:"БЕСПЛАТНЫЕ\nПРЕДМЕТЫ",
-        desc:"Родной язык, история и математика — полностью бесплатно."
-      },
-    ]
-  }
+function onFilialPick(opt) {
+  selFilial = opt.v
+  filialLabelEl.textContent = opt.l
+  filialTrigger.classList.add('has-value')
+  filialWrap.classList.remove('open', 'fs-err')
+  buildDropdown(filialDropdown, T[lang].filials, selFilial, onFilialPick)
+}
 
-  const FLAGS = { uz:'🇺🇿', ru:'🇷🇺' }
+/* ══════════════════════════════════════════════
+   RENDER — ikki alohida funksiya
 
-  let lang      = 'uz'
-  let current   = 0
-  let animating = false
-  let timerRef  = null
-  let sending   = false
+   renderSlider() — FAQAT chap tomondagi slider.
+   Forma holati (selCity, selFilial, inputlar)
+   ga UMUMAN tegmaydi.
 
-  const heroTitle   = document.getElementById('heroTitle')
-  const slideCard   = document.getElementById('slideCard')
-  const scPhoto     = document.getElementById('scPhoto')
-  const scPlaceholder = document.getElementById('scPlaceholder')
-  const scTag       = document.getElementById('scTag')
-  const scTitle     = document.getElementById('scTitle')
-  const scDesc      = document.getElementById('scDesc')
-  const sdots       = document.getElementById('sdots')
-  const fcTitle     = document.getElementById('fcTitle')
-  const fcSub       = document.getElementById('fcSub')
-  const nameInput   = document.getElementById('nameInput')
-  const phoneInput  = document.getElementById('phoneInput')
-  const fiName      = document.getElementById('fiName')
-  const fiPhone     = document.getElementById('fiPhone')
-  const submitBtn   = document.getElementById('submitBtn')
-  const netError    = document.getElementById('netError')
-  const formView    = document.getElementById('formView')
-  const successView = document.getElementById('successView')
-  const successTitle= document.getElementById('successTitle')
-  const successMsg  = document.getElementById('successMsg')
-  const resetBtn    = document.getElementById('resetBtn')
-  const langBtn     = document.getElementById('langBtn')
-  const langDd      = document.getElementById('langDd')
-  const flagIcon    = document.getElementById('flagIcon')
-  const langLabel   = document.getElementById('langLabel')
+   renderForm() — FAQAT statik forma matnlari
+   (title, placeholder, dropdown options).
+   Tanlangan qiymatlarni saqlab qoladi.
 
-  function renderAll() {
-    const t      = TRANSLATIONS[lang]
-    const slides = SLIDES[lang]
-    const slide  = slides[current]
+   renderAll() — ikkalasini birga chaqiradi;
+   faqat til o'zgansa yoki to'liq reset kerak
+   bo'lganda ishlatiladi.
+══════════════════════════════════════════════ */
+function renderSlider() {
+  const slides = SLIDES[lang]
+  const slide  = slides[current]
+  const t      = T[lang]
 
-    // Hero
-    heroTitle.innerHTML = t.heroTitle.map(l => `<span>${l}<br/></span>`).join('')
+  // Hero title
+  heroTitle.innerHTML = t.heroTitle.map(l => `<span>${l}<br/></span>`).join('')
 
-    // Slide background
-    slideCard.style.background = slide.bg
+  // Slide card
+  slideCard.style.background = slide.bg
+  scPhoto.innerHTML = ''
+  const ph = document.createElement('div')
+  ph.className = 'sc-photo-placeholder'
+  ph.style.cssText = 'font-size:88px; align-items:flex-end'
+  ph.textContent = slide.e
+  scPhoto.appendChild(ph)
+  scTag.textContent  = slide.tag
+  scTitle.innerHTML  = slide.title.replace(/\n/g, '<br/>')
+  scDesc.textContent = slide.desc
 
-    // Photo or emoji placeholder
-    scPhoto.innerHTML = ''
-    if (slide.imagePath) {
-      const img = document.createElement('img')
-      img.src = slide.imagePath
-      img.alt = slide.title
-      scPhoto.appendChild(img)
-    } else {
-      const ph = document.createElement('div')
-      ph.className = 'sc-photo-placeholder'
-      ph.style.fontSize = '90px'
-      ph.style.alignItems = 'flex-end'
-      ph.style.paddingBottom = '0'
-      // gradient overlay on placeholder
-      ph.style.background = 'rgba(0,0,0,0.1)'
-      ph.textContent = slide.emoji
-      scPhoto.appendChild(ph)
-    }
-
-    // Tag
-    scTag.textContent = slide.tag
-
-    // Title — handle newlines
-    scTitle.innerHTML = slide.title.replace(/\n/g, '<br/>')
-
-    // Desc
-    scDesc.textContent = slide.desc
-
-    // Dots
-    sdots.innerHTML = ''
-    slides.forEach((s, i) => {
-      const dot = document.createElement('span')
-      dot.className = 'sdot' + (i === current ? ' active' : '')
-      dot.style.setProperty('--c', s.color)
-      dot.addEventListener('click', e => {
-        e.stopPropagation()
-        goTo(i, i > current ? 'next' : 'prev')
-        resetTimer()
-      })
-      sdots.appendChild(dot)
-    })
-
-    // Form
-    fcTitle.textContent        = t.formTitle
-    fcSub.textContent          = t.formSub
-    nameInput.placeholder      = t.namePlaceholder
-    phoneInput.placeholder     = t.phonePlaceholder
-    submitBtn.textContent      = t.btnText
-    flagIcon.textContent       = FLAGS[lang]
-    langLabel.textContent      = t.langLabel
-    resetBtn.textContent       = t.backBtn
-  }
-
-  function goTo(idx, dir) {
-    if (animating) return
-    animating = true
-    slideCard.className = 'slide-card ' + (dir === 'next' ? 'slide-exit-next' : 'slide-exit-prev')
-    setTimeout(() => {
-      current = idx
-      renderAll()
-      slideCard.className = 'slide-card slide-enter'
-      animating = false
-    }, 380)
-  }
-
-  function next() { goTo((current + 1) % SLIDES[lang].length, 'next') }
-  function resetTimer() { clearInterval(timerRef); timerRef = setInterval(next, 4800) }
-
-  // Lang
-  langBtn.addEventListener('click', e => { e.stopPropagation(); langDd.classList.toggle('open') })
-  document.querySelectorAll('.dd-item').forEach(item => {
-    item.addEventListener('click', e => {
+  // Dots
+  sdots.innerHTML = ''
+  slides.forEach((s, i) => {
+    const d = document.createElement('span')
+    d.className = 'sdot' + (i === current ? ' active' : '')
+    d.style.setProperty('--c', s.color)
+    d.addEventListener('click', e => {
       e.stopPropagation()
-      lang = item.dataset.lang
-      current = 0
-      formView.style.display = ''
-      successView.style.display = 'none'
-      nameInput.value = ''; phoneInput.value = ''
-      netError.style.display = 'none'
-      fiName.classList.remove('fi-err'); fiPhone.classList.remove('fi-err')
-      renderAll()
-      langDd.classList.remove('open')
+      goTo(i, i > current ? 'next' : 'prev')
+      resetTimer()
     })
+    sdots.appendChild(d)
   })
-  document.addEventListener('click', () => langDd.classList.remove('open'))
+}
 
-  nameInput.addEventListener('input', () => fiName.classList.remove('fi-err'))
-  phoneInput.addEventListener('input', () => fiPhone.classList.remove('fi-err'))
+function renderForm() {
+  const t = T[lang]
 
-  submitBtn.addEventListener('click', async () => {
-    if (sending) return
-    const t = TRANSLATIONS[lang]
-    const name = nameInput.value.trim()
-    const phone = phoneInput.value.trim()
-    let hasErr = false
-    if (!name) { fiName.classList.add('fi-err'); hasErr = true } else fiName.classList.remove('fi-err')
-    if (!phone || phone.replace(/\D/g,'').length < 7) { fiPhone.classList.add('fi-err'); hasErr = true } else fiPhone.classList.remove('fi-err')
-    if (hasErr) return
-    sending = true
-    netError.style.display = 'none'
-    submitBtn.disabled = true
-    submitBtn.innerHTML = `<span class="fc-spinner"></span> ${t.btnSending}`
-    try {
-      await sendToBitrix({ name, phone, lang })
-      formView.style.display = 'none'
-      successView.style.display = ''
-      successTitle.textContent = `${t.successTitle}, ${name}!`
-      successMsg.textContent = t.successMsg
-    } catch (err) {
-      netError.textContent = t.errNetwork
-      netError.style.display = ''
-    } finally {
-      sending = false
-      submitBtn.disabled = false
-      submitBtn.textContent = t.btnText
-    }
-  })
+  // Statik matnlar
+  fcTitle.textContent   = t.formTitle
+  fcSub.textContent     = t.formSub
+  submitBtn.textContent = t.btnText
+  resetBtn.textContent  = t.back
+  flagIcon.textContent  = FLAGS[lang]
+  langLabel.textContent = t.langLbl
+  nameInput.placeholder  = t.namePh
+  phoneInput.placeholder = t.phonePh
 
-  resetBtn.addEventListener('click', () => {
-    nameInput.value = ''; phoneInput.value = ''
-    netError.style.display = 'none'
-    formView.style.display = ''
+  // City: agar tanlanmagan bo'lsa placeholder ko'rsat
+  if (!selCity) {
+    cityLabelEl.textContent = t.cityPh
+    cityTrigger.classList.remove('has-value')
+  }
+  // Filial: agar tanlanmagan bo'lsa placeholder ko'rsat
+  if (!selFilial) {
+    filialLabelEl.textContent = t.filialPh
+    filialTrigger.classList.remove('has-value')
+  }
+
+  // Dropdown options yangilanadi — tanlangan qiymat (active class) saqlanadi
+  buildDropdown(cityDropdown,   t.cities,  selCity,   onCityPick)
+  buildDropdown(filialDropdown, t.filials, selFilial, onFilialPick)
+}
+
+function resetFormState() {
+  selCity = ''; selFilial = ''
+  nameInput.value  = ''
+  phoneInput.value = ''
+  netError.style.display = 'none'
+  fiName.classList.remove('fi-err')
+  fiPhone.classList.remove('fi-err')
+  cityWrap.classList.remove('fs-err')
+  filialWrap.classList.remove('fs-err')
+  filialRow.classList.remove('visible')
+  cityTrigger.classList.remove('has-value')
+  filialTrigger.classList.remove('has-value')
+}
+
+function renderAll() {
+  renderSlider()
+  renderForm()
+}
+
+/* ── SLIDER ── */
+function goTo(idx, dir) {
+  if (animating) return
+  animating = true
+  slideCard.className = 'slide-card ' + (dir === 'next' ? 'slide-exit-next' : 'slide-exit-prev')
+  setTimeout(() => {
+    current = idx
+    renderSlider()   // ← Faqat slider! Forma tegmasdan qoladi.
+    slideCard.className = 'slide-card slide-enter'
+    animating = false
+  }, 380)
+}
+
+function next() { goTo((current + 1) % SLIDES[lang].length, 'next') }
+function resetTimer() { clearInterval(timer); timer = setInterval(next, 4800) }
+
+/* ── GLOBAL CLICK ── */
+document.addEventListener('click', closeAllSelects)
+
+/* ── LANG SWITCHER ── */
+langBtn.addEventListener('click', e => { e.stopPropagation(); langDd.classList.toggle('open') })
+
+document.querySelectorAll('.dd-item').forEach(item => {
+  item.addEventListener('click', e => {
+    e.stopPropagation()
+    lang = item.dataset.lang
+    current = 0
+    formView.style.display    = ''
     successView.style.display = 'none'
-    fiName.classList.remove('fi-err'); fiPhone.classList.remove('fi-err')
+    resetFormState()
     renderAll()
+    langDd.classList.remove('open')
   })
+})
 
+/* ── INPUT EVENTS ── */
+nameInput.addEventListener('input',  () => fiName.classList.remove('fi-err'))
+phoneInput.addEventListener('input', () => fiPhone.classList.remove('fi-err'))
+
+/* ── SUBMIT ── */
+submitBtn.addEventListener('click', async () => {
+  if (sending) return
+  const t     = T[lang]
+  const name  = nameInput.value.trim()
+  const phone = phoneInput.value.trim()
+  let hasErr  = false
+
+  if (!name)  { fiName.classList.add('fi-err');  hasErr = true } else fiName.classList.remove('fi-err')
+  if (!phone || phone.replace(/\D/g,'').length < 7) { fiPhone.classList.add('fi-err'); hasErr = true } else fiPhone.classList.remove('fi-err')
+  if (!selCity) { cityWrap.classList.add('fs-err'); hasErr = true } else cityWrap.classList.remove('fs-err')
+  if (selCity === 'toshkent' && !selFilial) { filialWrap.classList.add('fs-err'); hasErr = true } else filialWrap.classList.remove('fs-err')
+  if (hasErr) return
+
+  sending = true
+  netError.style.display = 'none'
+  submitBtn.disabled = true
+  submitBtn.innerHTML = `<span class="fc-spinner"></span> ${t.btnWait}`
+
+  try {
+    const cityLabel   = t.cities.find(c => c.v === selCity)?.l || selCity
+    const filialLabel = selFilial ? (t.filials.find(f => f.v === selFilial)?.l || selFilial) : ''
+    await sendToBitrix({ name, phone, city: cityLabel, filial: filialLabel, lang })
+    formView.style.display    = 'none'
+    successView.style.display = ''
+    successTitle.textContent  = `${t.okTitle}, ${name}!`
+    successMsg.textContent    = t.okMsg
+  } catch(err) {
+    netError.textContent   = t.errNet
+    netError.style.display = ''
+  } finally {
+    sending = false
+    submitBtn.disabled    = false
+    submitBtn.textContent = T[lang].btnText
+  }
+})
+
+/* ── RESET ── */
+resetBtn.addEventListener('click', () => {
+  formView.style.display    = ''
+  successView.style.display = 'none'
+  resetFormState()
   renderAll()
-  timerRef = setInterval(next, 4800)
+})
+
+/* ── INIT ── */
+renderAll()
+timer = setInterval(next, 4800)
 </script>
 </body>
 </html>
