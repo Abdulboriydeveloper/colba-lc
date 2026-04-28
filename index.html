@@ -57,13 +57,13 @@
     }
 
     /* LEFT */
-    .left { flex: 1; display: flex; flex-direction: column; gap: 32px; }
-    .hero-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(34px, 4.2vw, 60px); line-height: 1.1; color: #fff; }
+    .left { flex: 1; display: flex; flex-direction: column; gap: 80px; }
+    .hero-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(34px, 4.2vw, 50px); line-height: 1.1; color: #fff; }
 
     /* SLIDER */
     .slider-outer { display: flex; flex-direction: column; gap: 14px; }
     .slide-card {
-      width: 540px; min-height: 300px; border-radius: 22px; overflow: hidden;
+      width: 620px; height: 350px; border-radius: 22px; overflow: hidden;
       position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.35);
       flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr;
     }
@@ -223,14 +223,15 @@
       .navbar{padding:16px 20px;} .nav-logo{width:140px;}
       .main{flex-direction:column; align-items:stretch; padding:0 20px 40px; margin-top:12px; gap:28px;}
       .left{gap:22px;} .hero-title{font-size:clamp(26px,7vw,40px);}
-      .slide-card{width:100%;}
+      .slide-card{width:100%; height: 300px;}
       .right{width:100%;} .form-card{width:100%;} .fc-title{font-size:26px;} .fc-btn{height:54px; font-size:15px;}
     }
     @media (max-width:480px) {
       .navbar{padding:14px 16px;} .nav-logo{width:120px;}
       .main{padding:0 16px; gap:22px; z-index:9; margin:50px auto;}
       .hero-title{font-size:clamp(22px,8vw,34px);}
-      .form-card{padding:24px 18px 22px; border-radius:20px;} .fc-title{font-size:22px;}
+      .slide-card{height: 300px !important;}
+      .form-card{padding:24px 18px 22px; border-radius:20px;  height: 420px;} .fc-title{font-size:22px;}
       .fi input,.fs-trigger{font-size:15px;} .fc-btn{height:52px; font-size:14px; border-radius:14px;}
     }
   </style>
@@ -357,7 +358,7 @@ async function sendToBitrix({ name, phone, city, filial, lang }) {
 /* ── DATA ── */
 const T = {
   uz: {
-    heroTitle: ['KIMYO va BIOLOGIYAni', "o'rganishni", 'xohlaysizmi?'],
+    heroTitle: ['Kimyo va Biologiya ni', "o'rganishni", 'xohlaysizmi?'],
     formTitle: '3 kunlik sinov darsiga yoziling!',
     formSub:   '*Faqat Toshkent shahrida yashovchilar uchun!',
     namePh:    'Ismingiz',
@@ -396,20 +397,20 @@ const T = {
 
 const SLIDES = {
   uz: [
-    { id:1, tag:"O'QITUVCHILAR", color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"O'QITUVCHILARNING\nTAJRIBASI",   desc:"Har bir o'qituvchi maxsus kurslarni tamomlagan, IELTS 9.0 gacha. Bunday ustozlarni hech nimaga alishmaymiz." },
-    { id:2, tag:'NATIJA',        color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"100%\nNATIJA TIZIMI",           desc:"Dasturimizni to'liq yakunlaganlar tibbiyot oliygohlariga muddatidan oldin kirish natijasiga erishmoqda." },
-    { id:3, tag:'YORDAM',        color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"BEPUL\nYORDAMCHI O'QITUVCHI", desc:"Mavzuni o'zlashtirolmasangiz, yordamchi o'qituvchilar har doim yoningizda va qayta tushuntirib berishadi." },
-    { id:4, tag:'INTENSIV',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"HAR KUNLIK\nINTENSIV DARSLAR", desc:"Haftasiga 5 kun, 4-5 soatlik intensiv mashg'ulotlar orqali maksimal natijaga chiqamiz." },
-    { id:5, tag:'NAZORAT',       color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"HAR KUNLIK\nTEST TIZIMI",      desc:"Har kuni test orqali bilim nazorati qilinadi va real imtihon darajasiga olib chiqiladi." },
-    { id:6, tag:'BONUS',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"BEPUL\nMAJBURIY FANLAR",      desc:"Ona tili, tarix va matematika fanlari mutlaqo bepul o'qitiladi." },
+    { id:1, tag:"O'QITUVCHILAR", color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"USTOZLAR",   desc:"Har bir ustoz maxsus o'qitish kurslarini tamomlagan bo'lib, ularning tajribalari 10 yilgacha. Bunday ustozlarni hech nimaga alishmaymiz." },
+    { id:2, tag:'NATIJA',        color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"100% NATIJA",           desc:"Colba ta’lim dasturini to’liq yakunlagan o’quvchilar tibbiyot oliygohlariga muddatidan oldin kirishadi" },
+    { id:3, tag:'YORDAM',        color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"BEPUL YORDAMCHI USTOZ", desc:"Mavzuni o‘zlashtirishda qiynalayotgan o‘quvchilar uchun yordamchi ustozlar doim yonida bo‘lib, mavzuni qayta tushuntirib, to‘liq tushunishiga yordam berishadi" },
+    { id:4, tag:'INTENSIV',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"HAR KUNLIK DARSLAR", desc:"Haftasiga 5 kun, 4-5 soatdan o’qitish orqali tibbiyot oliygohlariga kirishingizga yordam beramiz" },
+    { id:5, tag:'NAZORAT',       color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"HAR KUNLIK IMTIHON",      desc:"O’quvchining mavzu o’zlashtirayotganini doimiy nazorat qilib borish uchun har kunlik imtihon tizimi joriy qilingan" },
+    { id:6, tag:'BONUS',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"BEPUL MAJBURIY FANLAR",      desc:"Ona tili, tarix va matematika fanlari Colba o’quvchilari uchun mutlaqo bepul o’qitiladi" },
   ],
   ru: [
-    { id:1, tag:'ПРЕПОДАВАТЕЛИ', color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"ОПЫТ\nПРЕПОДАВАТЕЛЕЙ",    desc:"Каждый преподаватель прошёл спецкурсы, IELTS до 9.0. Таких наставников мы ни на что не меняем." },
-    { id:2, tag:'РЕЗУЛЬТАТ',     color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"СИСТЕМА\n100% РЕЗУЛЬТАТА",   desc:"Студенты, завершившие программу, поступают в медвузы раньше срока." },
-    { id:3, tag:'ПОДДЕРЖКА',     color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"БЕСПЛАТНЫЙ\nНАСТАВНИК",      desc:"Помощники-преподаватели всегда рядом и готовы объяснить любую тему заново." },
-    { id:4, tag:'ИНТЕНСИВ',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"ЕЖЕДНЕВНЫЕ\nЗАНЯТИЯ",         desc:"5 дней в неделю по 4–5 часов интенсивной подготовки для максимального результата." },
-    { id:5, tag:'КОНТРОЛЬ',      color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"ЕЖЕДНЕВНЫЕ\nТЕСТЫ",          desc:"Постоянный контроль знаний через ежедневные тесты, приближённые к реальным." },
-    { id:6, tag:'БОНУС',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"БЕСПЛАТНЫЕ\nПРЕДМЕТЫ",      desc:"Родной язык, история и математика — полностью бесплатно." },
+    { id:1, tag:'ПРЕПОДАВАТЕЛИ', color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"УЧИТЕЛЯ",    desc:"Каждый преподаватель прошёл специальные курсы повышения квалификации и имеет до 10 лет опыта работы. Мы ни за что не променяем таких преподавателей ни на что другое." },
+    { id:2, tag:'РЕЗУЛЬТАТ',     color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"100% РЕЗУЛЬТАТ",   desc:"Студенты, завершившие образовательную программу Colba, поступят в медицинские вузы раньше запланированного срока." },
+    { id:3, tag:'ПОДДЕРЖКА',     color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"БЕСПЛАТНЫЙ ПОМОЩНИК УЧИТЕЛЯ",      desc:"Для студентов, испытывающих трудности с освоением какой-либо темы, всегда есть возможность обратиться к репетиторам, которые помогут им повторно объяснить тему и полностью ее понять." },
+    { id:4, tag:'ИНТЕНСИВ',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"ЕЖЕДНЕВНЫЕ УРОКИ",         desc:"Мы поможем вам поступить в медицинские вузы, проводя занятия по 4-5 часов в день, 5 дней в неделю." },
+    { id:5, tag:'КОНТРОЛЬ',      color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"ЕЖЕДНЕВНЫЙ ЭКЗАМЕН",          desc:"Для постоянного контроля за усвоением предмета учащимися введена система ежедневных экзаменов." },
+    { id:6, tag:'БОНУС',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"БЕСПЛАТНЫЕ ОБЯЗАТЕЛЬНЫЕ ПРЕДМЕТЫ",      desc:"Родной язык, история и математика преподаются ученикам школы Кольба совершенно бесплатно." },
   ],
 }
 
