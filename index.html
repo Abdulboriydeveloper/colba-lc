@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Colba kimyo va biologiya sinov darsiga yozilish formasi" />
   <title>Colba</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --blue: #1e90ff; }
-    html, body { height: 100%; font-family: 'Inter', sans-serif; }
+    :root { --blue: #1e90ff; --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    html, body { height: 100%; font-family: var(--font); }
+    button, input { font: inherit; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
 
     .page {
-      min-height: 100vh;
+      max-height: 100vh;
       display: flex; flex-direction: column;
       background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
       color: #fff; overflow: hidden;
@@ -27,15 +30,21 @@
       max-width: 1280px; width: 100%; margin: 0 auto;
     }
     .nav-logo { width: 176px; display: flex; align-items: center; gap: 13px; text-decoration: none; flex-shrink: 0; }
-    .logo-img { width: 100%; }
+    .logo-img { width: 100%; height: auto; display: block; }
+    .lang-wrap { position: relative; z-index: 200; }
     .nav-lang {
       display: flex; align-items: center; gap: 7px;
       background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
       border-radius: 30px; padding: 9px 16px; cursor: pointer;
       font-size: 13px; font-weight: 600; transition: background .2s;
-      position: relative; user-select: none; z-index: 200;
+      position: relative; user-select: none; z-index: 200; color: #fff;
     }
     .nav-lang:hover { background: rgba(255,255,255,0.12); }
+    .nav-lang:focus-visible, .fc-btn:focus-visible, .fc-reset:focus-visible, .fs-trigger:focus-visible, .sdot:focus-visible, .dd-item:focus-visible {
+      outline: 3px solid rgba(255,255,255,0.95);
+      outline-offset: 3px;
+    }
+    .fs-trigger:focus-visible, .fc-reset:focus-visible { outline-color: #0d3b51; }
     .nav-lang .flag { font-size: 18px; }
     .nav-lang .chevron { font-size: 10px; color: rgba(255,255,255,0.55); margin-left: 2px; }
     .lang-dd {
@@ -46,19 +55,19 @@
       z-index: 300; min-width: 145px; display: none;
     }
     .lang-dd.open { display: block; }
-    .dd-item { padding: 11px 18px; font-size: 13px; font-weight: 500; transition: background .15s; white-space: nowrap; cursor: pointer; color: #fff; }
+    .dd-item { width: 100%; padding: 11px 18px; font-size: 13px; font-weight: 500; transition: background .15s; white-space: nowrap; cursor: pointer; color: #fff; background: transparent; border: 0; text-align: left; }
     .dd-item:hover { background: rgba(255,255,255,0.08); }
 
     /* MAIN */
     .main {
       flex: 1; position: relative; z-index: 10;
       display: flex; align-items: flex-start; gap: 20px;
-      padding: 0 40px 40px; max-width: 1280px; width: 100%; margin: 0 auto;
+      padding: 0 40px 40px; max-width: 1280px; width: 100%; margin: 40px auto;
     }
 
     /* LEFT */
     .left { flex: 1; display: flex; flex-direction: column; gap: 80px; }
-    .hero-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(34px, 4.2vw, 50px); line-height: 1.1; color: #fff; }
+    .hero-title { font-family: var(--font); font-weight: 800; font-size: clamp(34px, 4.2vw, 50px); line-height: 1.1; color: #fff; }
 
     /* SLIDER */
     .slider-outer { display: flex; flex-direction: column; gap: 14px; }
@@ -80,8 +89,8 @@
     .sc-body { display: flex; flex-direction: column; justify-content: center; padding: 28px 24px 36px 20px; gap: 14px; position: relative; }
     .sc-body::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; border:3px solid rgba(255,255,255,0.15); border-radius:50%; pointer-events:none; }
     .sc-body::after  { content:''; position:absolute; bottom:10px; right:10px; width:60px; height:60px; border:2px solid rgba(255,255,255,0.12); border-radius:50%; pointer-events:none; }
-    .sc-tag { display:none; background:rgba(255,255,255,0.22); border-radius:30px; padding:4px 14px; font-size:10px; font-weight:800; letter-spacing:1.5px; color:#fff; text-transform:uppercase; width:fit-content; }
-    .sc-title { font-family:'Montserrat',sans-serif; font-weight:900; font-size:clamp(18px,2.2vw,26px); line-height:1.15; color:#fff; text-transform:uppercase; }
+    .sc-tag { display:none; }
+    .sc-title { font-family:var(--font); font-weight:900; font-size:clamp(18px,2.2vw,26px); line-height:1.15; color:#fff; text-transform:uppercase; }
     .sc-desc { font-size:12px; color:rgba(255,255,255,0.85); line-height:1.65; }
     .sc-deco { position:absolute; top:0; right:0; bottom:0; left:0; pointer-events:none; overflow:hidden; border-radius:22px; }
     .sc-deco span { position:absolute; display:block; background:rgba(255,255,255,0.06); transform-origin:center; }
@@ -89,7 +98,7 @@
     .sc-deco span:nth-child(2) { width:2px; height:200%; top:-50%; right:38%; transform:rotate(20deg); }
 
     .sdots { display:flex; gap:7px; }
-    .sdot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.28); cursor:pointer; transition:width .3s cubic-bezier(.34,1.56,.64,1), background .3s, border-radius .3s; }
+    .sdot { width:8px; height:8px; padding:0; border:0; border-radius:50%; background:rgba(255,255,255,0.36); cursor:pointer; transition:width .3s cubic-bezier(.34,1.56,.64,1), background .3s, border-radius .3s; }
     .sdot.active { width:26px; border-radius:4px; background:var(--c,#fff); }
 
     /* ARROW */
@@ -106,12 +115,12 @@
     }
     .fc-header { text-align:center; margin-bottom:8px; width: auto; height: 115px; }
     .fc-title {
-      font-family:'Montserrat',sans-serif; font-weight:800; font-size:38px;
+      font-family:var(--font); font-weight:800; font-size:38px;
       background:linear-gradient(135deg,#0d3b51 0%,#1689bf 50%,#1299d5 100%);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent;
       line-height:1.2; margin-bottom:10px;
     }
-    .fc-sub { font-size:13px; color:#94a3b8; font-style:italic; }
+    .fc-sub { font-size:13px; color:#475569; font-style:italic; }
 
     /* FIELDS */
     .fc-fields { display:flex; flex-direction:column; margin:16px 0 18px; gap: 5px; }
@@ -119,8 +128,8 @@
     .fi { border-bottom:1.5px solid #e2e8f0; padding:16px 4px; position:relative; transition:border-color .2s; }
     .fi:focus-within { border-color:var(--blue); }
     .fi.fi-err { border-color:#f87171 !important; }
-    .fi input { width:100%; border:none; outline:none; font-family:'Inter',sans-serif; font-size:16px; color:#1a1a2e; background:transparent; }
-    .fi input::placeholder { color:#94a3b8; }
+    .fi input { width:100%; border:none; outline:none; font-family:var(--font); font-size:16px; color:#1a1a2e; background:transparent; }
+    .fi input::placeholder { color:#64748b; }
     .fi input:disabled { opacity:0.6; cursor:not-allowed; }
 
     .fs-wrap {
@@ -135,7 +144,8 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 4px;
       cursor: pointer; user-select: none;
-      font-family: 'Inter', sans-serif; font-size: 16px; color: #94a3b8;
+      width: 100%; border: 0; background: transparent;
+      font-family: var(--font); font-size: 16px; color: #64748b;
     }
     .fs-trigger.has-value { color: #1a1a2e; }
 
@@ -166,6 +176,7 @@
     }
 
     .fs-option {
+      width: 100%; border: 0; background: #fff; text-align: left;
       padding: 13px 16px;
       font-size: 15px; color: #1a1a2e;
       cursor: pointer; transition: background .15s;
@@ -188,7 +199,7 @@
       width:100%; height:58px;
       background:linear-gradient(135deg,#0d3b51 0%,#1689bf 50%,#1299d5 100%);
       color:#fff; border:none; cursor:pointer; border-radius:16px;
-      font-family:'Montserrat',sans-serif; font-weight:800; font-size:17px;
+      font-family:var(--font); font-weight:800; font-size:17px;
       transition:filter .15s, transform .15s, box-shadow .15s;
       display:flex; align-items:center; justify-content:center; gap:10px;
       margin-top:auto; flex-shrink:0;
@@ -197,7 +208,7 @@
     .fc-btn:active { transform:translateY(0); }
     .fc-btn:disabled { opacity:0.75; cursor:not-allowed; transform:none; box-shadow:none; filter:none; }
 
-    .fc-error { font-size:13px; color:#ef4444; text-align:center; padding:6px 4px 0; line-height:1.5; display:none; }
+    .fc-error { font-size:13px; color:#b91c1c; text-align:center; padding:6px 4px 0; line-height:1.5; display:none; }
 
     .fc-spinner { display:inline-block; width:18px; height:18px; border:2.5px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; flex-shrink:0; }
     @keyframes spin { to { transform:rotate(360deg); } }
@@ -206,7 +217,7 @@
     .fc-success { display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; animation:popIn .35s cubic-bezier(.34,1.56,.64,1); padding:40px 0; }
     @keyframes popIn { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
     .fc-check { width:68px; height:68px; border-radius:50%; background:#22c55e; display:flex; align-items:center; justify-content:center; font-size:30px; color:#fff; }
-    .fc-success h3 { font-family:'Montserrat',sans-serif; font-weight:800; font-size:22px; color:#0b1a3e; }
+    .fc-success h3 { font-family:var(--font); font-weight:800; font-size:22px; color:#0b1a3e; }
     .fc-success p  { font-size:14px; color:#64748b; }
     .fc-reset { background:transparent; border:1.5px solid #e2e8f0; border-radius:10px; padding:9px 24px; font-size:13px; cursor:pointer; color:#64748b; transition:border-color .2s; }
     .fc-reset:hover { border-color:#0b1a3e; color:#0b1a3e; }
@@ -219,20 +230,28 @@
       .right{width:400px;} .form-card{width:100%;} .fc-title{font-size:28px;}
     }
     @media (max-width:860px) {
-      html,body{height:auto;} .page{min-height:100svh; overflow:auto;}
+      html,body{height:auto;} .page{min-height:100svh; overflow:auto; max-height:none;}
       .navbar{padding:16px 20px;} .nav-logo{width:140px;}
       .main{flex-direction:column; align-items:stretch; padding:0 20px 40px; margin-top:12px; gap:28px;}
       .left{gap:22px;} .hero-title{font-size:clamp(26px,7vw,40px);}
       .slide-card{width:100%; height: 300px;}
-      .right{width:100%;} .form-card{width:100%;} .fc-title{font-size:26px;} .fc-btn{height:54px; font-size:15px;}
+      .right{width:100%;} .form-card{width:100%; height:auto;} .fc-title{font-size:26px;} .fc-btn{height:54px; font-size:15px;}
     }
     @media (max-width:480px) {
       .navbar{padding:14px 16px;} .nav-logo{width:120px;}
       .main{padding:0 16px; gap:22px; z-index:9; margin:50px auto;}
       .hero-title{font-size:clamp(22px,8vw,34px);}
       .slide-card{height: 300px !important;}
-      .form-card{padding:24px 18px 22px; border-radius:20px;  height: 420px;} .fc-title{font-size:22px;}
+      .form-card{padding:24px 18px 22px; border-radius:20px; height:auto;} .fc-title{font-size:22px;}
       .fi input,.fs-trigger{font-size:15px;} .fc-btn{height:52px; font-size:14px; border-radius:14px;}
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
     }
   </style>
 </head>
@@ -241,17 +260,19 @@
 <div class="page">
 
   <!-- NAVBAR -->
-  <nav class="navbar">
+  <nav class="navbar" aria-label="Asosiy">
     <a class="nav-logo" href="#">
-      <img src="logoOq.png" alt="Colba logo" class="logo-img" />
+      <img src="logoOq-small.png" alt="Colba" class="logo-img" width="352" height="131" fetchpriority="high" />
     </a>
-    <div class="nav-lang" id="langBtn">
-      <span class="flag" id="flagIcon">🇺🇿</span>
-      <span id="langLabel">Uzb</span>
-      <span class="chevron">▾</span>
-      <div class="lang-dd" id="langDd">
-        <div class="dd-item" data-lang="uz">🇺🇿 O'zbekcha</div>
-        <div class="dd-item" data-lang="ru">🇷🇺 Русский</div>
+    <div class="lang-wrap">
+      <button class="nav-lang" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langDd" aria-label="Tilni tanlash">
+        <span class="flag" id="flagIcon" aria-hidden="true">🇺🇿</span>
+        <span id="langLabel">Uzb</span>
+        <span class="chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="lang-dd" id="langDd" role="menu">
+        <button class="dd-item" type="button" data-lang="uz" role="menuitem">🇺🇿 O'zbekcha</button>
+        <button class="dd-item" type="button" data-lang="ru" role="menuitem">🇷🇺 Русский</button>
       </div>
     </div>
   </nav>
@@ -263,8 +284,8 @@
     <div class="left">
       <h1 class="hero-title" id="heroTitle"></h1>
       <div class="slider-outer">
-        <div class="slide-card slide-enter" id="slideCard">
-          <div class="sc-deco"><span></span><span></span></div>
+        <div class="slide-card slide-enter" id="slideCard" aria-live="polite">
+          <div class="sc-deco" aria-hidden="true"><span></span><span></span></div>
           <div class="sc-photo" id="scPhoto"></div>
           <div class="sc-body">
             <span class="sc-tag"  id="scTag"></span>
@@ -272,13 +293,13 @@
             <p   class="sc-desc"  id="scDesc"></p>
           </div>
         </div>
-        <div class="sdots" id="sdots"></div>
+        <div class="sdots" id="sdots" aria-label="Slaydlar"></div>
       </div>
     </div>
 
     <!-- ARROW -->
-    <div class="arrow-wrap">
-      <svg width="64" height="46" viewBox="0 0 64 46" fill="none">
+    <div class="arrow-wrap" aria-hidden="true">
+      <svg width="64" height="46" viewBox="0 0 64 46" fill="none" focusable="false">
         <path d="M56.7209 5.40605C56.7827 6.1656 56.8446 6.92516 56.8181 7.73139C46.786 -0.779873 32.4866 -2.1719 20.5207 4.71075C7.45239 12.2886 -1.51059 29.3561 1.33808 44.602C1.44667 45.45 3.01641 45.6399 3.17303 44.6519C5.46419 31.2196 8.34762 18.2669 20.7353 10.2562C30.4343 4.00433 44.6933 3.60689 53.239 11.6579C51.5341 11.4262 49.7876 11.3296 48.0827 11.0979C43.7789 10.6537 43.5716 17.3272 47.7403 17.7295L60.4283 19.0668C62.0865 19.2101 64.0629 17.6008 63.9341 15.858C63.7233 12.4609 63.6009 9.01718 63.3901 5.62009C63.3826 1.32344 56.5315 0.979048 56.7209 5.40605Z" fill="white"/>
       </svg>
     </div>
@@ -295,35 +316,37 @@
 
           <div class="fc-fields">
             <div class="fi" id="fiName">
-              <input type="text" id="nameInput" autocomplete="off" />
+              <label class="sr-only" for="nameInput">Ism-familya</label>
+              <input type="text" id="nameInput" autocomplete="name" required aria-required="true" />
             </div>
             <div class="fi" id="fiPhone">
-              <input type="tel" id="phoneInput" autocomplete="off" />
+              <label class="sr-only" for="phoneInput">Telefon raqamingiz</label>
+              <input type="tel" id="phoneInput" autocomplete="tel" inputmode="numeric" maxlength="17" required aria-required="true" />
             </div>
             <div class="fs-wrap" id="cityWrap">
-              <div class="fs-trigger" id="cityTrigger">
+              <button class="fs-trigger" id="cityTrigger" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="cityDropdown" aria-required="true">
                 <span id="cityLabel"></span>
-                <span class="fs-arrow">▾</span>
-              </div>
-              <div class="fs-dropdown" id="cityDropdown"></div>
+                <span class="fs-arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="fs-dropdown" id="cityDropdown" role="listbox" aria-label="Shahar"></div>
             </div>
             <div class="filial-row" id="filialRow">
               <div class="fs-wrap" id="filialWrap">
-                <div class="fs-trigger" id="filialTrigger">
+                <button class="fs-trigger" id="filialTrigger" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="filialDropdown" aria-required="true">
                   <span id="filialLabel"></span>
-                  <span class="fs-arrow">▾</span>
-                </div>
-                <div class="fs-dropdown" id="filialDropdown"></div>
+                  <span class="fs-arrow" aria-hidden="true">▾</span>
+                </button>
+                <div class="fs-dropdown" id="filialDropdown" role="listbox" aria-label="Filial"></div>
               </div>
             </div>
           </div>
 
-          <p class="fc-error" id="netError"></p>
-          <button class="fc-btn" id="submitBtn"></button>
+          <p class="fc-error" id="netError" role="alert"></p>
+          <button class="fc-btn" id="submitBtn" type="button"></button>
         </div>
 
         <div class="fc-success" id="successView" style="display:none">
-          <div class="fc-check">✓</div>
+          <div class="fc-check" aria-hidden="true">✓</div>
           <h3 id="successTitle"></h3>
           <p  id="successMsg"></p>
           <button class="fc-reset" id="resetBtn"></button>
@@ -335,27 +358,56 @@
 </div>
 
 <script>
-/* ── CONFIG ── */
-const BITRIX_WEBHOOK = 'https://YOUR_DOMAIN.bitrix24.ru/rest/1/YOUR_TOKEN'
-const LEAD_SOURCE    = 'WEB'
+/* ══════════════════════════════════════════════════
+   CONFIG
+   Bitrix webhook — faqat Toshkent lidlari tushadi
+══════════════════════════════════════════════════ */
+const BITRIX_WEBHOOK = 'https://colba.bitrix24.kz/rest/17/26223axyuok2wj2u'
+const LEAD_SOURCE    = 'REPEAT_SALE' // Bitrix Source: Website
+const BITRIX_FIELDS = {
+  fullName: 'UF_CRM_LEAD_1753906771051',
+  filial:   'UF_CRM_1729075562007',
+  filialText: 'UF_CRM_QASIFILIALDAO',
+  branchText: 'UF_CRM_BRANCH',
+}
 
-async function sendToBitrix({ name, phone, city, filial, lang }) {
+const BITRIX_FILIAL_IDS = {
+  chilonzor: '637',
+  yunusobod: '921',
+  sergeli:   '493',
+  // Bitrixdagi "Filial?" ro'yxatida Mirobod yo'q. Matn alohida fieldlarga yoziladi.
+}
+
+/**
+ * Faqat Toshkent tanlanganda chaqiriladi.
+ * filial har doim mavjud bo'ladi (toshkent uchun filial majburiy).
+ */
+async function sendToBitrix({ name, phone, filial, lang }) {
   const url  = `${BITRIX_WEBHOOK}/crm.lead.add.json`
   const body = new FormData()
-  body.append('fields[TITLE]',                `Colba — ${name}`)
+  body.append('fields[TITLE]',                `Colba — ${name} - WEB`)
   body.append('fields[NAME]',                 name)
+  body.append(`fields[${BITRIX_FIELDS.fullName}]`, name)
   body.append('fields[PHONE][0][VALUE]',      phone)
   body.append('fields[PHONE][0][VALUE_TYPE]', 'WORK')
   body.append('fields[SOURCE_ID]',            LEAD_SOURCE)
+  body.append(`fields[${BITRIX_FIELDS.filialText}]`, filial.label)
+  body.append(`fields[${BITRIX_FIELDS.branchText}]`, filial.label)
+  if (filial.bitrixId) {
+    body.append(`fields[${BITRIX_FIELDS.filial}]`, filial.bitrixId)
+  }
   body.append('fields[COMMENTS]',
-    `Til: ${lang==='uz'?"O'zbek":'Rus'} | Shahar: ${city}${filial?' | Filial: '+filial:''} | Sayt: Colba lid forma`)
+    `Til: ${lang === 'uz' ? "O'zbek" : 'Rus'} | Shahar: Toshkent | Filial: ${filial.label} | Sayt: Colba lid forma`)
   body.append('fields[STATUS_ID]', 'NEW')
-  const res = await fetch(url, { method:'POST', body })
-  if (!res.ok) throw new Error(`Bitrix ${res.status}`)
+
+  const res = await fetch(url, { method: 'POST', body })
+  if (!res.ok) throw new Error(`Bitrix error: ${res.status}`)
   return res.json()
 }
 
-/* ── DATA ── */
+/* ══════════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════════ */
 const T = {
   uz: {
     heroTitle: ['Kimyo va Biologiya ni', "o'rganishni", 'xohlaysizmi?'],
@@ -372,8 +424,16 @@ const T = {
     back:      'Qaytish',
     langLbl:   'Uzb',
     errNet:    "Xatolik yuz berdi. Qayta urinib ko'ring.",
-    cities:  [ { v:'toshkent', l:'Toshkent' }, { v:'boshqa', l:'Boshqa shahar' } ],
-    filials: [ { v:'chilonzor', l:'Chilonzor filiali' }, { v:'yunusobod', l:'Yunusobod filiali' }, { v:'mirobod', l:'Mirobod filiali' }, { v:'sergeli', l:'Sergeli filiali' } ],
+    cities:  [
+      { v: 'toshkent', l: 'Toshkent'      },
+      { v: 'boshqa',   l: 'Boshqa shahar' },
+    ],
+    filials: [
+      { v: 'chilonzor', l: 'Chilonzor filiali' },
+      { v: 'yunusobod', l: 'Yunusobod filiali' },
+      { v: 'mirobod',   l: 'Mirobod filiali'   },
+      { v: 'sergeli',   l: 'Sergeli filiali'   },
+    ],
   },
   ru: {
     heroTitle: ['Хотите', 'выучить', 'ХИМИЯ и БИОЛОГИЯ?'],
@@ -390,58 +450,75 @@ const T = {
     back:      'Назад',
     langLbl:   'Rus',
     errNet:    'Произошла ошибка. Попробуйте снова.',
-    cities:  [ { v:'toshkent', l:'Ташкент' }, { v:'boshqa', l:'Другой город' } ],
-    filials: [ { v:'chilonzor', l:'Филиал Чиланзар' }, { v:'yunusobod', l:'Филиал Юнусабад' }, { v:'mirobod', l:'Филиал Мирабад' }, { v:'sergeli', l:'Филиал Сергели' } ],
+    cities:  [
+      { v: 'toshkent', l: 'Ташкент'      },
+      { v: 'boshqa',   l: 'Другой город' },
+    ],
+    filials: [
+      { v: 'chilonzor', l: 'Филиал Чиланзар' },
+      { v: 'yunusobod', l: 'Филиал Юнусабад' },
+      { v: 'mirobod',   l: 'Филиал Мирабад'  },
+      { v: 'sergeli',   l: 'Филиал Сергели'  },
+    ],
   },
 }
 
 const SLIDES = {
   uz: [
-    { id:1, tag:"O'QITUVCHILAR", color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"USTOZLAR",   desc:"Har bir ustoz maxsus o'qitish kurslarini tamomlagan bo'lib, ularning tajribalari 10 yilgacha. Bunday ustozlarni hech nimaga alishmaymiz." },
-    { id:2, tag:'NATIJA',        color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"100% NATIJA",           desc:"Colba ta’lim dasturini to’liq yakunlagan o’quvchilar tibbiyot oliygohlariga muddatidan oldin kirishadi" },
-    { id:3, tag:'YORDAM',        color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"BEPUL YORDAMCHI USTOZ", desc:"Mavzuni o‘zlashtirishda qiynalayotgan o‘quvchilar uchun yordamchi ustozlar doim yonida bo‘lib, mavzuni qayta tushuntirib, to‘liq tushunishiga yordam berishadi" },
-    { id:4, tag:'INTENSIV',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"HAR KUNLIK DARSLAR", desc:"Haftasiga 5 kun, 4-5 soatdan o’qitish orqali tibbiyot oliygohlariga kirishingizga yordam beramiz" },
-    { id:5, tag:'NAZORAT',       color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"HAR KUNLIK IMTIHON",      desc:"O’quvchining mavzu o’zlashtirayotganini doimiy nazorat qilib borish uchun har kunlik imtihon tizimi joriy qilingan" },
-    { id:6, tag:'BONUS',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"BEPUL MAJBURIY FANLAR",      desc:"Ona tili, tarix va matematika fanlari Colba o’quvchilari uchun mutlaqo bepul o’qitiladi" },
+    { id:1, color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"USTOZLAR",               desc:"Har bir ustoz maxsus o'qitish kurslarini tamomlagan bo'lib, ularning tajribalari 10 yilgacha. Bunday ustozlarni hech nimaga alishmaymiz." },
+    { id:2, color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆',   title:"100% NATIJA",             desc:"Colba ta'lim dasturini to'liq yakunlagan o'quvchilar tibbiyot oliygohlariga muddatidan oldin kirishadi." },
+    { id:3, color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝',   title:"BEPUL YORDAMCHI USTOZ",   desc:"Mavzuni o'zlashtirishda qiynalayotgan o'quvchilar uchun yordamchi ustozlar doim yonida bo'lib, mavzuni qayta tushuntirib berishadi." },
+    { id:4, color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅',   title:"HAR KUNLIK DARSLAR",      desc:"Haftasiga 5 kun, 4-5 soatdan o'qitish orqali tibbiyot oliygohlariga kirishingizga yordam beramiz." },
+    { id:5, color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝',   title:"HAR KUNLIK IMTIHON",      desc:"O'quvchining mavzu o'zlashtirayotganini doimiy nazorat qilib borish uchun har kunlik imtihon tizimi joriy qilingan." },
+    { id:6, color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁',   title:"BEPUL MAJBURIY FANLAR",   desc:"Ona tili, tarix va matematika fanlari Colba o'quvchilari uchun mutlaqo bepul o'qitiladi." },
   ],
   ru: [
-    { id:1, tag:'ПРЕПОДАВАТЕЛИ', color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"УЧИТЕЛЯ",    desc:"Каждый преподаватель прошёл специальные курсы повышения квалификации и имеет до 10 лет опыта работы. Мы ни за что не променяем таких преподавателей ни на что другое." },
-    { id:2, tag:'РЕЗУЛЬТАТ',     color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆', title:"100% РЕЗУЛЬТАТ",   desc:"Студенты, завершившие образовательную программу Colba, поступят в медицинские вузы раньше запланированного срока." },
-    { id:3, tag:'ПОДДЕРЖКА',     color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝', title:"БЕСПЛАТНЫЙ ПОМОЩНИК УЧИТЕЛЯ",      desc:"Для студентов, испытывающих трудности с освоением какой-либо темы, всегда есть возможность обратиться к репетиторам, которые помогут им повторно объяснить тему и полностью ее понять." },
-    { id:4, tag:'ИНТЕНСИВ',      color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅', title:"ЕЖЕДНЕВНЫЕ УРОКИ",         desc:"Мы поможем вам поступить в медицинские вузы, проводя занятия по 4-5 часов в день, 5 дней в неделю." },
-    { id:5, tag:'КОНТРОЛЬ',      color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝', title:"ЕЖЕДНЕВНЫЙ ЭКЗАМЕН",          desc:"Для постоянного контроля за усвоением предмета учащимися введена система ежедневных экзаменов." },
-    { id:6, tag:'БОНУС',         color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁', title:"БЕСПЛАТНЫЕ ОБЯЗАТЕЛЬНЫЕ ПРЕДМЕТЫ",      desc:"Родной язык, история и математика преподаются ученикам школы Кольба совершенно бесплатно." },
+    { id:1, color:'#22c55e', bg:'linear-gradient(135deg,#065f46,#10b981)', e:'👩‍🏫', title:"УЧИТЕЛЯ",                          desc:"Каждый преподаватель прошёл специальные курсы повышения квалификации и имеет до 10 лет опыта работы." },
+    { id:2, color:'#3b82f6', bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)', e:'🏆',   title:"100% РЕЗУЛЬТАТ",                   desc:"Студенты, завершившие образовательную программу Colba, поступят в медицинские вузы раньше запланированного срока." },
+    { id:3, color:'#f97316', bg:'linear-gradient(135deg,#7c2d12,#f97316)', e:'🤝',   title:"БЕСПЛАТНЫЙ ПОМОЩНИК УЧИТЕЛЯ",      desc:"Для студентов, испытывающих трудности, всегда есть репетиторы, которые помогут повторно объяснить тему." },
+    { id:4, color:'#ef4444', bg:'linear-gradient(135deg,#7f1d1d,#ef4444)', e:'📅',   title:"ЕЖЕДНЕВНЫЕ УРОКИ",                 desc:"Мы поможем вам поступить в медицинские вузы, проводя занятия по 4-5 часов в день, 5 дней в неделю." },
+    { id:5, color:'#f59e0b', bg:'linear-gradient(135deg,#78350f,#f59e0b)', e:'📝',   title:"ЕЖЕДНЕВНЫЙ ЭКЗАМЕН",               desc:"Для постоянного контроля за усвоением предмета введена система ежедневных экзаменов." },
+    { id:6, color:'#06b6d4', bg:'linear-gradient(135deg,#164e63,#06b6d4)', e:'🎁',   title:"БЕСПЛАТНЫЕ ОБЯЗАТЕЛЬНЫЕ ПРЕДМЕТЫ", desc:"Родной язык, история и математика преподаются ученикам школы Colba совершенно бесплатно." },
   ],
 }
 
-const FLAGS = { uz:'🇺🇿', ru:'🇷🇺' }
+const FLAGS = { uz: '🇺🇿', ru: '🇷🇺' }
 
-/* ── STATE ── */
+/* ══════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════ */
 let lang = 'uz', current = 0, animating = false, timer = null, sending = false
 let selCity = '', selFilial = ''
 
-/* ── DOM REFS ── */
+/* ══════════════════════════════════════════════════
+   DOM REFS
+══════════════════════════════════════════════════ */
 const g = id => document.getElementById(id)
-const heroTitle    = g('heroTitle'),   slideCard     = g('slideCard'),    scPhoto        = g('scPhoto')
-const scTag        = g('scTag'),       scTitle       = g('scTitle'),      scDesc         = g('scDesc'),     sdots = g('sdots')
-const fcTitle      = g('fcTitle'),     fcSub         = g('fcSub')
-const nameInput    = g('nameInput'),   phoneInput    = g('phoneInput')
-const fiName       = g('fiName'),      fiPhone       = g('fiPhone')
-const cityWrap     = g('cityWrap'),    cityTrigger   = g('cityTrigger'),  cityLabelEl    = g('cityLabel'),   cityDropdown  = g('cityDropdown')
-const filialRow    = g('filialRow'),   filialWrap    = g('filialWrap'),   filialTrigger  = g('filialTrigger'), filialLabelEl = g('filialLabel'), filialDropdown = g('filialDropdown')
-const submitBtn    = g('submitBtn'),   netError      = g('netError'),     formView       = g('formView'),    successView   = g('successView')
-const successTitle = g('successTitle'), successMsg   = g('successMsg'),   resetBtn       = g('resetBtn')
-const langBtn      = g('langBtn'),     langDd        = g('langDd'),       flagIcon       = g('flagIcon'),    langLabel     = g('langLabel')
+const heroTitle     = g('heroTitle'),    slideCard     = g('slideCard'),    scPhoto        = g('scPhoto')
+const scTag         = g('scTag'),        scTitle       = g('scTitle'),      scDesc         = g('scDesc'),      sdots = g('sdots')
+const fcTitle       = g('fcTitle'),      fcSub         = g('fcSub')
+const nameInput     = g('nameInput'),    phoneInput    = g('phoneInput')
+const fiName        = g('fiName'),       fiPhone       = g('fiPhone')
+const cityWrap      = g('cityWrap'),     cityTrigger   = g('cityTrigger'),  cityLabelEl    = g('cityLabel'),    cityDropdown  = g('cityDropdown')
+const filialRow     = g('filialRow'),    filialWrap    = g('filialWrap'),   filialTrigger  = g('filialTrigger'), filialLabelEl = g('filialLabel'),  filialDropdown = g('filialDropdown')
+const submitBtn     = g('submitBtn'),    netError      = g('netError'),     formView       = g('formView'),     successView   = g('successView')
+const successTitle  = g('successTitle'), successMsg    = g('successMsg'),   resetBtn       = g('resetBtn')
+const langBtn       = g('langBtn'),      langDd        = g('langDd'),       flagIcon       = g('flagIcon'),     langLabel     = g('langLabel')
 
-/* ── DROPDOWN HELPERS ── */
-function buildDropdown(dropdownEl, options, activeVal, onPick) {
-  dropdownEl.innerHTML = ''
+/* ══════════════════════════════════════════════════
+   DROPDOWN HELPERS
+══════════════════════════════════════════════════ */
+function buildDropdown(el, options, activeVal, onPick) {
+  el.innerHTML = ''
   options.forEach(opt => {
-    const div = document.createElement('div')
-    div.className = 'fs-option' + (opt.v === activeVal ? ' active' : '')
-    div.textContent = opt.l
-    div.addEventListener('mousedown', e => { e.preventDefault(); e.stopPropagation(); onPick(opt) })
-    dropdownEl.appendChild(div)
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'fs-option' + (opt.v === activeVal ? ' active' : '')
+    btn.textContent = opt.l
+    btn.setAttribute('role', 'option')
+    btn.setAttribute('aria-selected', String(opt.v === activeVal))
+    btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); onPick(opt) })
+    el.appendChild(btn)
   })
 }
 
@@ -449,20 +526,59 @@ function closeAllSelects() {
   cityWrap.classList.remove('open')
   filialWrap.classList.remove('open')
   langDd.classList.remove('open')
+  cityTrigger.setAttribute('aria-expanded', 'false')
+  filialTrigger.setAttribute('aria-expanded', 'false')
+  langBtn.setAttribute('aria-expanded', 'false')
 }
 
-/* ── CITY SELECT ── */
+function getPhoneDigits(value) {
+  return value.replace(/\D/g, '')
+}
+
+function getLocalPhoneDigits(value) {
+  const digits = getPhoneDigits(value)
+  if (digits.startsWith('998')) return digits.slice(3, 12)
+  if (digits.startsWith('0')) return digits.slice(1, 10)
+  return digits.slice(0, 9)
+}
+
+function formatPhone(value) {
+  const local = getLocalPhoneDigits(value)
+  if (!local) return ''
+
+  const parts = ['+998']
+  if (local.length > 0) parts.push(local.slice(0, 2))
+  if (local.length > 2) parts.push(local.slice(2, 5))
+  if (local.length > 5) parts.push(local.slice(5, 7))
+  if (local.length > 7) parts.push(local.slice(7, 9))
+
+  return parts.join(' ')
+}
+
+function isValidPhone(value) {
+  return getPhoneDigits(value).length === 12 && getPhoneDigits(value).startsWith('998')
+}
+
+/* ── City select ── */
 cityTrigger.addEventListener('click', e => {
   e.stopPropagation()
-  cityWrap.classList.contains('open') ? closeAllSelects() : (closeAllSelects(), cityWrap.classList.add('open'))
+  if (cityWrap.classList.contains('open')) {
+    closeAllSelects()
+  } else {
+    closeAllSelects()
+    cityWrap.classList.add('open')
+    cityTrigger.setAttribute('aria-expanded', 'true')
+  }
 })
 
 function onCityPick(opt) {
-  selCity = opt.v
+  selCity   = opt.v
   selFilial = ''
   cityLabelEl.textContent = opt.l
   cityTrigger.classList.add('has-value')
   cityWrap.classList.remove('open', 'fs-err')
+  cityTrigger.setAttribute('aria-expanded', 'false')
+  cityTrigger.setAttribute('aria-invalid', 'false')
   buildDropdown(cityDropdown, T[lang].cities, selCity, onCityPick)
 
   if (selCity === 'toshkent') {
@@ -471,19 +587,27 @@ function onCityPick(opt) {
     filialWrap.classList.remove('fs-err')
     buildDropdown(filialDropdown, T[lang].filials, '', onFilialPick)
     filialRow.classList.remove('visible')
-    void filialRow.offsetWidth
+    filialRow.setAttribute('aria-hidden', 'false')
+    void filialRow.offsetWidth          // reflow — animation qayta ishlashi uchun
     filialRow.classList.add('visible')
   } else {
     filialRow.classList.remove('visible')
+    filialRow.setAttribute('aria-hidden', 'true')
     filialWrap.classList.remove('fs-err')
     selFilial = ''
   }
 }
 
-/* ── FILIAL SELECT ── */
+/* ── Filial select ── */
 filialTrigger.addEventListener('click', e => {
   e.stopPropagation()
-  filialWrap.classList.contains('open') ? closeAllSelects() : (closeAllSelects(), filialWrap.classList.add('open'))
+  if (filialWrap.classList.contains('open')) {
+    closeAllSelects()
+  } else {
+    closeAllSelects()
+    filialWrap.classList.add('open')
+    filialTrigger.setAttribute('aria-expanded', 'true')
+  }
 })
 
 function onFilialPick(opt) {
@@ -491,84 +615,57 @@ function onFilialPick(opt) {
   filialLabelEl.textContent = opt.l
   filialTrigger.classList.add('has-value')
   filialWrap.classList.remove('open', 'fs-err')
+  filialTrigger.setAttribute('aria-expanded', 'false')
+  filialTrigger.setAttribute('aria-invalid', 'false')
   buildDropdown(filialDropdown, T[lang].filials, selFilial, onFilialPick)
 }
 
-/* ══════════════════════════════════════════════
-   RENDER — ikki alohida funksiya
-
-   renderSlider() — FAQAT chap tomondagi slider.
-   Forma holati (selCity, selFilial, inputlar)
-   ga UMUMAN tegmaydi.
-
-   renderForm() — FAQAT statik forma matnlari
-   (title, placeholder, dropdown options).
-   Tanlangan qiymatlarni saqlab qoladi.
-
-   renderAll() — ikkalasini birga chaqiradi;
-   faqat til o'zgansa yoki to'liq reset kerak
-   bo'lganda ishlatiladi.
-══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════════════ */
 function renderSlider() {
-  const slides = SLIDES[lang]
-  const slide  = slides[current]
-  const t      = T[lang]
-
-  // Hero title
+  const slides = SLIDES[lang], slide = slides[current], t = T[lang]
   heroTitle.innerHTML = t.heroTitle.map(l => `<span>${l}<br/></span>`).join('')
-
-  // Slide card
   slideCard.style.background = slide.bg
   scPhoto.innerHTML = ''
   const ph = document.createElement('div')
   ph.className = 'sc-photo-placeholder'
   ph.style.cssText = 'font-size:88px; align-items:flex-end'
+  ph.setAttribute('aria-hidden', 'true')
   ph.textContent = slide.e
   scPhoto.appendChild(ph)
-  scTag.textContent  = slide.tag
   scTitle.innerHTML  = slide.title.replace(/\n/g, '<br/>')
   scDesc.textContent = slide.desc
-
-  // Dots
   sdots.innerHTML = ''
   slides.forEach((s, i) => {
-    const d = document.createElement('span')
+    const d = document.createElement('button')
+    d.type = 'button'
     d.className = 'sdot' + (i === current ? ' active' : '')
+    d.setAttribute('aria-label', `${i + 1}-slayd`)
+    d.setAttribute('aria-current', i === current ? 'true' : 'false')
     d.style.setProperty('--c', s.color)
-    d.addEventListener('click', e => {
-      e.stopPropagation()
-      goTo(i, i > current ? 'next' : 'prev')
-      resetTimer()
-    })
+    d.addEventListener('click', e => { e.stopPropagation(); goTo(i, i > current ? 'next' : 'prev'); resetTimer() })
     sdots.appendChild(d)
   })
 }
 
 function renderForm() {
   const t = T[lang]
-
-  // Statik matnlar
-  fcTitle.textContent   = t.formTitle
-  fcSub.textContent     = t.formSub
-  submitBtn.textContent = t.btnText
-  resetBtn.textContent  = t.back
-  flagIcon.textContent  = FLAGS[lang]
-  langLabel.textContent = t.langLbl
+  document.documentElement.lang = lang
+  fcTitle.textContent    = t.formTitle
+  fcSub.textContent      = t.formSub
+  submitBtn.textContent  = t.btnText
+  resetBtn.textContent   = t.back
+  flagIcon.textContent   = FLAGS[lang]
+  langLabel.textContent  = t.langLbl
   nameInput.placeholder  = t.namePh
   phoneInput.placeholder = t.phonePh
-
-  // City: agar tanlanmagan bo'lsa placeholder ko'rsat
-  if (!selCity) {
-    cityLabelEl.textContent = t.cityPh
-    cityTrigger.classList.remove('has-value')
-  }
-  // Filial: agar tanlanmagan bo'lsa placeholder ko'rsat
-  if (!selFilial) {
-    filialLabelEl.textContent = t.filialPh
-    filialTrigger.classList.remove('has-value')
-  }
-
-  // Dropdown options yangilanadi — tanlangan qiymat (active class) saqlanadi
+  nameInput.setAttribute('aria-label', t.namePh)
+  phoneInput.setAttribute('aria-label', t.phonePh)
+  cityTrigger.setAttribute('aria-label', t.cityPh)
+  filialTrigger.setAttribute('aria-label', t.filialPh)
+  if (!selCity)   { cityLabelEl.textContent   = t.cityPh;   cityTrigger.classList.remove('has-value') }
+  if (!selFilial) { filialLabelEl.textContent = t.filialPh; filialTrigger.classList.remove('has-value') }
   buildDropdown(cityDropdown,   t.cities,  selCity,   onCityPick)
   buildDropdown(filialDropdown, t.filials, selFilial, onFilialPick)
 }
@@ -578,47 +675,55 @@ function resetFormState() {
   nameInput.value  = ''
   phoneInput.value = ''
   netError.style.display = 'none'
-  fiName.classList.remove('fi-err')
-  fiPhone.classList.remove('fi-err')
-  cityWrap.classList.remove('fs-err')
-  filialWrap.classList.remove('fs-err')
+  fiName.classList.remove('fi-err');    fiPhone.classList.remove('fi-err')
+  cityWrap.classList.remove('fs-err'); filialWrap.classList.remove('fs-err')
   filialRow.classList.remove('visible')
-  cityTrigger.classList.remove('has-value')
-  filialTrigger.classList.remove('has-value')
+  filialRow.setAttribute('aria-hidden', 'true')
+  nameInput.setAttribute('aria-invalid', 'false')
+  phoneInput.setAttribute('aria-invalid', 'false')
+  cityTrigger.setAttribute('aria-invalid', 'false')
+  filialTrigger.setAttribute('aria-invalid', 'false')
+  cityTrigger.classList.remove('has-value'); filialTrigger.classList.remove('has-value')
 }
 
-function renderAll() {
-  renderSlider()
-  renderForm()
-}
+function renderAll() { renderSlider(); renderForm() }
 
-/* ── SLIDER ── */
+/* ══════════════════════════════════════════════════
+   SLIDER
+══════════════════════════════════════════════════ */
 function goTo(idx, dir) {
   if (animating) return
   animating = true
   slideCard.className = 'slide-card ' + (dir === 'next' ? 'slide-exit-next' : 'slide-exit-prev')
   setTimeout(() => {
     current = idx
-    renderSlider()   // ← Faqat slider! Forma tegmasdan qoladi.
+    renderSlider()
     slideCard.className = 'slide-card slide-enter'
     animating = false
   }, 380)
 }
-
-function next() { goTo((current + 1) % SLIDES[lang].length, 'next') }
+function next()       { goTo((current + 1) % SLIDES[lang].length, 'next') }
 function resetTimer() { clearInterval(timer); timer = setInterval(next, 4800) }
 
-/* ── GLOBAL CLICK ── */
+/* ══════════════════════════════════════════════════
+   GLOBAL CLICK
+══════════════════════════════════════════════════ */
 document.addEventListener('click', closeAllSelects)
 
-/* ── LANG SWITCHER ── */
-langBtn.addEventListener('click', e => { e.stopPropagation(); langDd.classList.toggle('open') })
-
+/* ══════════════════════════════════════════════════
+   LANG SWITCHER
+══════════════════════════════════════════════════ */
+langBtn.addEventListener('click', e => {
+  e.stopPropagation()
+  const willOpen = !langDd.classList.contains('open')
+  closeAllSelects()
+  langDd.classList.toggle('open', willOpen)
+  langBtn.setAttribute('aria-expanded', String(willOpen))
+})
 document.querySelectorAll('.dd-item').forEach(item => {
   item.addEventListener('click', e => {
     e.stopPropagation()
-    lang = item.dataset.lang
-    current = 0
+    lang = item.dataset.lang; current = 0
     formView.style.display    = ''
     successView.style.display = 'none'
     resetFormState()
@@ -627,38 +732,100 @@ document.querySelectorAll('.dd-item').forEach(item => {
   })
 })
 
-/* ── INPUT EVENTS ── */
-nameInput.addEventListener('input',  () => fiName.classList.remove('fi-err'))
-phoneInput.addEventListener('input', () => fiPhone.classList.remove('fi-err'))
+/* ══════════════════════════════════════════════════
+   INPUT VALIDATION CLEAR
+══════════════════════════════════════════════════ */
+nameInput.addEventListener('input',  () => {
+  fiName.classList.remove('fi-err')
+  nameInput.setAttribute('aria-invalid', 'false')
+})
+phoneInput.addEventListener('focus', () => {
+  if (!phoneInput.value) phoneInput.value = '+998 '
+})
+phoneInput.addEventListener('input', () => {
+  phoneInput.value = formatPhone(phoneInput.value)
+  fiPhone.classList.remove('fi-err')
+  phoneInput.setAttribute('aria-invalid', 'false')
+})
+phoneInput.addEventListener('blur', () => {
+  if (getLocalPhoneDigits(phoneInput.value).length === 0) phoneInput.value = ''
+})
 
-/* ── SUBMIT ── */
+/* ══════════════════════════════════════════════════
+   SUBMIT
+   ┌─────────────────────────────────────────────┐
+   │  selCity === 'toshkent'                     │
+   │    → filial majburiy                        │
+   │    → Bitrix ga lid yuboriladi               │
+   │                                             │
+   │  selCity === 'boshqa'                       │
+   │    → filial ko'rinmaydi, kerak emas         │
+   │    → Bitrix ga HECH NARSA yuborilmaydi      │
+   │    → faqat success ekran ko'rsatiladi       │
+   └─────────────────────────────────────────────┘
+══════════════════════════════════════════════════ */
 submitBtn.addEventListener('click', async () => {
   if (sending) return
+
   const t     = T[lang]
   const name  = nameInput.value.trim()
-  const phone = phoneInput.value.trim()
+  const phone = formatPhone(phoneInput.value).trim()
+  phoneInput.value = phone
   let hasErr  = false
 
-  if (!name)  { fiName.classList.add('fi-err');  hasErr = true } else fiName.classList.remove('fi-err')
-  if (!phone || phone.replace(/\D/g,'').length < 7) { fiPhone.classList.add('fi-err'); hasErr = true } else fiPhone.classList.remove('fi-err')
-  if (!selCity) { cityWrap.classList.add('fs-err'); hasErr = true } else cityWrap.classList.remove('fs-err')
-  if (selCity === 'toshkent' && !selFilial) { filialWrap.classList.add('fs-err'); hasErr = true } else filialWrap.classList.remove('fs-err')
+  /* ── Validatsiya ── */
+  if (!name)  { fiName.classList.add('fi-err'); nameInput.setAttribute('aria-invalid', 'true'); hasErr = true }
+  else          { fiName.classList.remove('fi-err'); nameInput.setAttribute('aria-invalid', 'false') }
+
+  if (!isValidPhone(phone)) {
+    fiPhone.classList.add('fi-err'); phoneInput.setAttribute('aria-invalid', 'true'); hasErr = true
+  } else { fiPhone.classList.remove('fi-err'); phoneInput.setAttribute('aria-invalid', 'false') }
+
+  if (!selCity) {
+    cityWrap.classList.add('fs-err'); cityTrigger.setAttribute('aria-invalid', 'true'); hasErr = true
+  } else { cityWrap.classList.remove('fs-err'); cityTrigger.setAttribute('aria-invalid', 'false') }
+
+  // Filial faqat Toshkent uchun majburiy
+  if (selCity === 'toshkent' && !selFilial) {
+    filialWrap.classList.add('fs-err'); filialTrigger.setAttribute('aria-invalid', 'true'); hasErr = true
+  } else { filialWrap.classList.remove('fs-err'); filialTrigger.setAttribute('aria-invalid', 'false') }
+
   if (hasErr) return
 
+  /* ── Yuborish ── */
   sending = true
   netError.style.display = 'none'
   submitBtn.disabled = true
   submitBtn.innerHTML = `<span class="fc-spinner"></span> ${t.btnWait}`
 
   try {
-    const cityLabel   = t.cities.find(c => c.v === selCity)?.l || selCity
-    const filialLabel = selFilial ? (t.filials.find(f => f.v === selFilial)?.l || selFilial) : ''
-    await sendToBitrix({ name, phone, city: cityLabel, filial: filialLabel, lang })
+    if (selCity === 'toshkent') {
+      // ✅ Toshkent → filial bilan Bitrix ga yuboriladi
+      const filialLabel = t.filials.find(f => f.v === selFilial)?.l || selFilial
+      await sendToBitrix({
+        name,
+        phone,
+        filial: {
+          label: filialLabel,
+          bitrixId: BITRIX_FILIAL_IDS[selFilial],
+        },
+        lang,
+      })
+
+    } else {
+      // ⛔ Boshqa shahar → Bitrix ga YUBORILMAYDI
+      // (faqat success ko'rsatiladi)
+      console.info('[Colba] Boshqa shahar tanlandi — lid Bitrix ga yuborilmadi.')
+    }
+
+    // Ikki holda ham success ko'rsatiladi
     formView.style.display    = 'none'
     successView.style.display = ''
     successTitle.textContent  = `${t.okTitle}, ${name}!`
     successMsg.textContent    = t.okMsg
-  } catch(err) {
+
+  } catch (err) {
+    console.error('[Colba] Bitrix xatosi:', err)
     netError.textContent   = t.errNet
     netError.style.display = ''
   } finally {
@@ -668,7 +835,9 @@ submitBtn.addEventListener('click', async () => {
   }
 })
 
-/* ── RESET ── */
+/* ══════════════════════════════════════════════════
+   RESET
+══════════════════════════════════════════════════ */
 resetBtn.addEventListener('click', () => {
   formView.style.display    = ''
   successView.style.display = 'none'
@@ -676,7 +845,9 @@ resetBtn.addEventListener('click', () => {
   renderAll()
 })
 
-/* ── INIT ── */
+/* ══════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════ */
 renderAll()
 timer = setInterval(next, 4800)
 </script>
