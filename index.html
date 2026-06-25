@@ -16,7 +16,7 @@
     }
 
     .page {
-      max-height: 100vh;
+      min-height: 100vh;
       display: flex; flex-direction: column;
       background: linear-gradient(135deg, #0d3b51 0%, #1689bf 50%, #1299d5 100%);
       color: #fff; overflow: hidden;
@@ -230,7 +230,7 @@
       .right{width:400px;} .form-card{width:100%;} .fc-title{font-size:28px;}
     }
     @media (max-width:860px) {
-      html,body{height:auto;} .page{min-height:100svh; overflow:auto; max-height:none;}
+      html,body{height:auto;} .page{min-height: 100svh; overflow: auto; overflow:auto; max-height:none;}
       .navbar{padding:16px 20px;} .nav-logo{width:140px;}
       .main{flex-direction:column; align-items:stretch; padding:0 20px 40px; margin-top:12px; gap:28px;}
       .left{gap:22px;} .hero-title{font-size:clamp(26px,7vw,40px);}
@@ -258,14 +258,13 @@
 <body>
 
 <div class="page">
-
   <!-- NAVBAR -->
   <nav class="navbar" aria-label="Asosiy">
     <a class="nav-logo" href="#">
-      <img src="logoOq.png" alt="Colba" class="logo-img" width="352" height="131" fetchpriority="high" />
+      <img src="logoOq-176.png" srcset="logoOq-120.png 120w, logoOq-176.png 176w" sizes="(max-width: 480px) 120px, (max-width: 860px) 140px, 176px" alt="Colba" class="logo-img" width="176" height="65" fetchpriority="high" />
     </a>
     <div class="lang-wrap">
-      <button class="nav-lang" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langDd" aria-label="Tilni tanlash">
+      <button class="nav-lang" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langDd">
         <span class="flag" id="flagIcon" aria-hidden="true">🇺🇿</span>
         <span id="langLabel">Uzb</span>
         <span class="chevron" aria-hidden="true">▾</span>
@@ -284,12 +283,12 @@
     <div class="left">
       <h1 class="hero-title" id="heroTitle"></h1>
       <div class="slider-outer">
-        <div class="slide-card slide-enter" id="slideCard" aria-live="polite">
+        <div class="slide-card" id="slideCard" aria-live="polite">
           <div class="sc-deco" aria-hidden="true"><span></span><span></span></div>
           <div class="sc-photo" id="scPhoto"></div>
           <div class="sc-body">
             <span class="sc-tag"  id="scTag"></span>
-            <h3  class="sc-title" id="scTitle"></h3>
+            <h2  class="sc-title" id="scTitle"></h2>
             <p   class="sc-desc"  id="scDesc"></p>
           </div>
         </div>
@@ -429,10 +428,9 @@ const T = {
       { v: 'boshqa',   l: 'Boshqa shahar' },
     ],
     filials: [
-      { v: 'chilonzor', l: 'Chilonzor filiali' },
-      { v: 'yunusobod', l: 'Yunusobod filiali' },
-      { v: 'mirobod',   l: 'Mirobod filiali'   },
-      { v: 'sergeli',   l: 'Sergeli filiali'   },
+      { v: 'tinchlik', l: 'Tinchlik filiali' },
+      { v: 'sergeli', l: 'Sergeli filiali' },
+      { v: 'nurafshon',   l: 'Nurafshon filiali'   },
     ],
   },
   ru: {
@@ -455,10 +453,9 @@ const T = {
       { v: 'boshqa',   l: 'Другой город' },
     ],
     filials: [
-      { v: 'chilonzor', l: 'Филиал Чиланзар' },
-      { v: 'yunusobod', l: 'Филиал Юнусабад' },
-      { v: 'mirobod',   l: 'Филиал Мирабад'  },
+      { v: 'tinchlik', l: 'Филиал Тинчлик' },
       { v: 'sergeli',   l: 'Филиал Сергели'  },
+      { v: 'nurafshon', l: 'Филиал Нурафшон' },
     ],
   },
 }
@@ -849,7 +846,7 @@ resetBtn.addEventListener('click', () => {
    INIT
 ══════════════════════════════════════════════════ */
 renderAll()
-timer = setInterval(next, 4800)
+timer = setTimeout(() => { timer = setInterval(next, 4800) }, 9000)
 </script>
 </body>
 </html>
